@@ -1,98 +1,46 @@
-// document.addEventListener("DOMContentLoaded", () => {});
-
 const canvas = document.querySelector("#game-area");
 const ctx = canvas.getContext("2d");
-
-const CANVAS_WIDTH = (canvas.width = 600);
-const CANVAS_HEIGTH = (canvas.height = 800);
-
-let gameSpeed = 5;
+const CANVAS_WIDTH = (canvas.width = 900);
+const CANVAS_HEIGTH = (canvas.height = 900);
+let gameSpeed = 5; //Game Speed minumum 5 ?
 let gameFrame = 0;
-
 let numberOfPads = 5;
 
+//Background Layers
 const backgroundLayer1 = new Image();
 backgroundLayer1.src = "../resources/img/backgrounds/background.jpg";
 const backgroundLayer2 = new Image();
 backgroundLayer2.src = "../resources/img/backgrounds/cloud-group.png";
-
-// Background
-
-class Layer {
-  constructor(image, width, height, speedModifier) {
-    this.x = 0;
-    this.y = 0;
-    this.width = width;
-    this.height = height;
-    this.image = image;
-    this.speedModifier = speedModifier;
-    this.speed = gameSpeed * this.speedModifier;
-  }
-
-  draw() {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-    ctx.drawImage(
-      this.image,
-      this.x,
-      this.y - this.height,
-      this.width,
-      this.height
-    );
-  }
-
-  update() {
-    this.speed = gameSpeed * this.speedModifier;
-    if (this.y >= this.height) this.y = 0;
-    this.y = Math.floor(this.y + this.speed);
-  }
-}
-
 const layersArray = [
-  new Layer(backgroundLayer1, 800, 800, 0.2),
-  new Layer(backgroundLayer2, 826, 400, 0.4),
+  new Layer(backgroundLayer1, 900, 900, 0.2),
+  new Layer(backgroundLayer2, 826, 600, 0.4),
 ];
 
-// Platforms
-
+// Pads
 const padImg1 = new Image();
-padImg1.src = "../resources/img/pads/grass_pad.png";
-
-class Pad {
-  constructor(image, x, y, width, height) {
-    this.y = y;
-    this.x = Math.random() * x;
-    this.width = width;
-    this.height = height;
-    this.image = image;
-    this.speed = gameSpeed;
-    this.markedToDelete = false;
-  }
-
-  draw() {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-  }
-
-  update() {
-    this.speed = gameSpeed * 0.6; //Hardcoded speed modifier- change to variable
-    this.y = Math.floor(this.y + this.speed);
-
-    if (this.y >= CANVAS_HEIGTH) this.markedToDelete = true;
-  }
-}
-
+padImg1.src = "../resources/img/pads/grass_pad_2.png";
 let padsArray = [];
 
+// Functions
 function createPads() {
-  const interval = Math.floor(Math.random() * 100 + 50);
-
+  const interval = Math.floor(Math.random() * 200 + 50);
+  const padWidth = 150;
+  const padHeight = 50;
+  const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
   if (gameFrame % interval === 0) {
     for (let i = 0; i < numberOfPads; i++) {
-      let padGap = 1000 / numberOfPads;
-      let bottom = 100 + i * padGap;
-      padsArray.push(new Pad(padImg1, bottom, 0, 70, 20));
+      // random x position
+      let x = Math.random() * (CANVAS_WIDTH - padWidth);
+      // vertical gap between pads
+      let y = i * gapBetweenPads;
+      padsArray.push(new Pad(padImg1, x, y, padWidth, padHeight));
     }
   }
 }
+
+//Player
+
+const player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGTH - 100, 105, 100);
 
 function animate() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
@@ -102,14 +50,16 @@ function animate() {
     object.draw();
     object.update();
   });
-
   padsArray = padsArray.filter((object) => !object.markedToDelete);
 
+  //
+  player.draw();
+  //
+
   gameFrame++;
-
-  //console.log(padsArray);
-
   requestAnimationFrame(animate);
 }
 
-animate();
+document.addEventListener("DOMContentLoaded", () => {
+  animate();
+});
