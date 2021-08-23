@@ -2,18 +2,20 @@ const canvas = document.querySelector("#game-area");
 const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
-let gameSpeed = 5; //Game Speed minumum 5 ?
+let gameSpeed = 10; // minus go down, plus go up
 let gameFrame = 0;
-let numberOfPads = 5;
+let numberOfPads = 0;
+let isGameOver = false;
 
 //Background Layers
 const backgroundLayer1 = new Image();
-backgroundLayer1.src = "../resources/img/backgrounds/background.jpg";
+backgroundLayer1.src = "../resources/img/backgrounds/background.png";
 const backgroundLayer2 = new Image();
 backgroundLayer2.src = "../resources/img/backgrounds/cloud-group.png";
+
 const layersArray = [
-  new Layer(backgroundLayer1, 900, 900, 0.2),
-  new Layer(backgroundLayer2, 826, 600, 0.4),
+  new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, 0.2),
+  new Layer(backgroundLayer2, CANVAS_WIDTH, CANVAS_HEIGTH, 0.4),
 ];
 
 // Pads
@@ -40,7 +42,7 @@ function createPads() {
 
 //Player
 
-const player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGTH - 100, 105, 100);
+const player = new Player(CANVAS_WIDTH / 2 - 40, CANVAS_HEIGTH - 200, 243, 243);
 
 function animate() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
@@ -56,9 +58,21 @@ function animate() {
   player.draw();
   //
 
+  //movePlatforms()
+
   gameFrame++;
   requestAnimationFrame(animate);
 }
+
+
+function movePlatforms(){
+  if(player.y < 700){
+    padsArray.forEach( pad =>{
+      pad.y -= 4;
+    })
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   animate();

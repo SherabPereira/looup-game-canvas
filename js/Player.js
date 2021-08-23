@@ -1,31 +1,41 @@
-// const image1 = new Image();
-// const image2 = new Image();
-// image1.src = "../resources/img/sprites/player/marshmallow_earphone-01.png";
-// image2.src = "../resources/img/sprites/player/marshmallow_earphone-02.png";
-
-// const playerState = [
-//   { walkLeft: [new Image()] },
-//   { walkRight: [image1, image2] },
-//   { jumpLeft: [] },
-//   { jumpright: [image1, image1, image2] },
-// ];
-
 class Player {
-  constructor(x, y, width, height) {
+  constructor(x, y, spriteWidth, spriteHeight) {
     this.image = new Image();
-    this.image.src =
-      "../resources/img/sprites/player/marshmallow_earphone-01.png";
+    this.image.src = "../resources/img/sprites/player.png";
+    this.spriteWidth = spriteWidth;
+    this.spriteHeight = spriteHeight;
+    this.width = this.spriteWidth / 2.5;
+    this.height = this.spriteHeight / 2.5;
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this.frame = 0;
+    //                    end  4 <-(3 + (1))-> 1  start
+    this.spriteChangeSpeed = Math.floor(Math.random() * 3 + 1);
   }
-
-  draw() {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  moveLeft() {}
+  moveRight() {}
+  jump() {
+    this.y -= 2;
   }
-
   update() {
     this.x++;
+    this.y++;
+    // animate sprites
+    if (gameFrame % this.spriteChangeSpeed === 0) {
+      this.frame > 6 ? (this.frame = 0) : this.frame++;
+    }
+  }
+  draw() {
+    ctx.drawImage(
+      this.image,
+      this.frame * this.spriteWidth,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 }
