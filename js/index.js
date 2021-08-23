@@ -6,7 +6,7 @@ const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 600);
 const CANVAS_HEIGTH = (canvas.height = 800);
 
-let gameSpeed = 4;
+let gameSpeed = 5;
 let gameFrame = 0;
 
 let numberOfPads = 5;
@@ -76,16 +76,14 @@ class Pad {
     this.speed = gameSpeed * 0.6; //Hardcoded speed modifier- change to variable
     this.y = Math.floor(this.y + this.speed);
 
-    console.log(this.y , CANVAS_HEIGTH)
     if (this.y >= CANVAS_HEIGTH) this.markedToDelete = true;
-
   }
 }
 
 let padsArray = [];
 
 function createPads() {
-  const interval = Math.floor(Math.random() * 100 + 55);
+  const interval = Math.floor(Math.random() * 100 + 50);
 
   if (gameFrame % interval === 0) {
     for (let i = 0; i < numberOfPads; i++) {
