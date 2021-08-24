@@ -1,6 +1,6 @@
 class Player {
   constructor(x, y, spriteWidth, spriteHeight) {
-    this.state = "moveLeft";
+    this.state = "moveRight";
     this.image = new Image();
     this.image.src = "../resources/img/sprites/player.png";
     this.spriteWidth = spriteWidth;
@@ -21,16 +21,37 @@ class Player {
   }
 
   moveLeft() {
-    this.state = "idleLeft";
+    if (this.state === "jumpRight") {
+      this.state = "jumpLeft";
+    } else if (
+      this.state !== "jumpLeft" &&
+      this.state !== "fallLeft" &&
+      this.state !== "fallRight"
+    ) {
+      this.state = "moveLeft";
+    } else if (this.state === "fallRight") {
+      this.state = "fallLeft";
+    }
+
     clearInterval(this.rightTimerId);
     this.leftTimerId = setInterval(() => {
-      //this.state = "moveLeft";
       if (this.x > 0) this.x -= 5;
     }, 35);
   }
 
   moveRight() {
-    this.state = "idleRight";
+    if (this.state === "jumpLeft") {
+      this.state = "jumpRight";
+    } else if (this.state === "fallLeft") {
+      this.state = "fallRight";
+    } else if (
+      this.state !== "jumpRight" &&
+      this.state !== "fallRight" &&
+      this.state !== "fallLeft"
+    ) {
+      this.state = "moveRight";
+    }
+
     clearInterval(this.leftTimerId);
     this.rightTimerId = setInterval(() => {
       if (this.x < CANVAS_WIDTH - this.width) this.x += 5;
@@ -38,7 +59,10 @@ class Player {
   }
 
   jump() {
-    if (!this.state === "idleLeft") this.state = "idleRight";
+    console.log(this.state);
+    if (this.state == "moveLeft") this.state = "jumpLeft";
+    if (this.state == "moveRight") this.state = "jumpRight";
+
     clearInterval(this.downTimerId);
     this.upTimerId = setInterval(() => {
       gameSpeed += 0.4;
@@ -50,8 +74,10 @@ class Player {
   }
 
   fall() {
-    if (this.state === "idleLeft") this.state = "fallLeft";
-    if (this.state === "idleLeft") this.state = "fallRight";
+    if (this.state === "jumpLeft" || this.state === "moveLeft")
+      this.state = "fallLeft";
+    if (this.state === "jumpRight" || this.state === "moveRight")
+      this.state = "fallRight";
 
     clearInterval(this.upTimerId);
     this.downTimerId = setInterval(() => {

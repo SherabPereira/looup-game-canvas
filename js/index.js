@@ -71,19 +71,19 @@ function createPlayer() {
 function createPlayerSpriteAnimations() {
   playerAnimationStates = [
     {
+      name: "jumpLeft",
+      frames: 6,
+    },
+    {
+      name: "jumpRight",
+      frames: 6,
+    },
+    {
       name: "fallLeft",
       frames: 6,
     },
     {
       name: "fallRight",
-      frames: 6,
-    },
-    {
-      name: "idleLeft",
-      frames: 6,
-    },
-    {
-      name: "idleRight",
       frames: 6,
     },
     {
