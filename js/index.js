@@ -7,6 +7,7 @@ let gameFrame = 0;
 let numberOfPads = 5;
 let isGameOver = false;
 let platformDeleted = false;
+const staggerFrames = 5;
 
 //Background Layers
 const backgroundLayer1 = new Image();
@@ -26,12 +27,19 @@ padImg1.src = "../resources/img/pads/grass_pad.png";
 
 //Player
 let player = null; //hardcoded min y pos (2nd arg)
+const playerSpriteWidth = 165;
+const playerSpriteHeight = 164;
+const spriteAnimations = [];
+let playerAnimationStates = [];
+
+//Characters
+let charactersArray = [];
 
 // Functions
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
-  const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
+  const gapBetweenPads = CANVAS_HEIGTH / numberOfPads + 30;
   const availableSpace = CANVAS_WIDTH - padWidth;
 
   if (isMultiplePads) {
@@ -50,14 +58,62 @@ function createPads(isMultiplePads) {
 }
 
 function createPlayer() {
-  const playerWidth = 243;
-  const playerHeight = 243;
+
 
   if (padsArray.length !== 0 && padsArray !== null) {
-    const x = padsArray[0].x + 25;
-    const y = padsArray[0].y - 57;
-    player = new Player(x, y, playerWidth, playerHeight);
+    const x = padsArray[0].x + 23;
+    const y = padsArray[0].y - 69;
+    player = new Player(x, y, playerSpriteWidth, playerSpriteHeight);
+    charactersArray.push(player);
   }
+}
+
+function createPlayerSpriteAnimations() {
+  playerAnimationStates = [
+    {
+      name: "fallLeft",
+      frames: 6,
+    },
+    {
+      name: "fallRight",
+      frames: 6,
+    },
+    {
+      name: "idleLeft",
+      frames: 6,
+    },
+    {
+      name: "idleRight",
+      frames: 6,
+    },
+    {
+      name: "moveLeft",
+      frames: 6,
+    },
+    {
+      name: "moveRight",
+      frames: 6,
+    },
+  ];
+
+  playerAnimationStates.forEach((state, i) => {
+    let frames = {
+      loc: [],
+    };
+    for (let j = 0; j < state.frames; j++) {
+      let positionX = j * playerSpriteWidth;
+      let positionY = i * playerSpriteHeight;
+      frames.loc.push({ x: positionX, y: positionY });
+    }
+    spriteAnimations[state.name] = frames;
+  });
+
+  console.log(spriteAnimations)
+}
+
+function gameOver() {
+  console.log("over");
+  isGameOver = true;
 }
 
 function animate() {
@@ -67,7 +123,7 @@ function animate() {
     createPads(false);
     platformDeleted = false;
   }
-  [...layersArray, ...padsArray].forEach((object) => {
+  [...layersArray, ...padsArray, ...charactersArray].forEach((object) => {
     object.draw();
     object.update();
   });
@@ -77,9 +133,9 @@ function animate() {
     return !object.markedToDelete;
   });
 
-  //
-  player.draw();
-  //
+  // //
+  // player.draw();
+  // //
   gameFrame++;
   requestAnimationFrame(animate);
 }
@@ -94,6 +150,7 @@ function movePlayer(event) {
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", movePlayer);
   createPads(true);
+  createPlayerSpriteAnimations();
   createPlayer();
   animate();
 });
