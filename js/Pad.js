@@ -7,6 +7,7 @@ class Pad {
     this.image = image;
     this.speed = gameSpeed;
     this.markedToDelete = false;
+  
   }
 
   draw() {
@@ -15,7 +16,7 @@ class Pad {
 
   update() {
     this.speed = gameSpeed * 0.6; //Hardcoded speed modifier- change to variable
-    this.y = Math.floor(this.y + this.speed);
+    this.y = this.y + this.speed;
 
     if (this.y >= CANVAS_HEIGTH) this.markedToDelete = true;
   }

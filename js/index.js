@@ -2,10 +2,11 @@ const canvas = document.querySelector("#game-area");
 const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
-let gameSpeed = 10; // minus go down, plus go up
+let gameSpeed = 0; // minus go down, plus go up
 let gameFrame = 0;
-let numberOfPads = 0;
+let numberOfPads = 5;
 let isGameOver = false;
+let platformDeleted = false;
 
 //Background Layers
 const backgroundLayer1 = new Image();
@@ -19,61 +20,80 @@ const layersArray = [
 ];
 
 // Pads
-const padImg1 = new Image();
-padImg1.src = "../resources/img/pads/grass_pad_2.png";
 let padsArray = [];
+const padImg1 = new Image();
+padImg1.src = "../resources/img/pads/grass_pad.png";
+
+//Player
+let player = null; //hardcoded min y pos (2nd arg)
 
 // Functions
-function createPads() {
-  const interval = Math.floor(Math.random() * 200 + 50);
+function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
   const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
-  if (gameFrame % interval === 0) {
+  const availableSpace = CANVAS_WIDTH - padWidth;
+
+  if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
-      // random x position
-      let x = Math.random() * (CANVAS_WIDTH - padWidth);
-      // vertical gap between pads
+      let x = Math.ceil(Math.random() * availableSpace);
       let y = i * gapBetweenPads;
-      padsArray.push(new Pad(padImg1, x, y, padWidth, padHeight));
+      padsArray.unshift(
+        new Pad(padImg1, x, y - padHeight, padWidth, padHeight)
+      );
     }
+  } else {
+    let x = Math.ceil(Math.random() * availableSpace);
+    let y = gapBetweenPads;
+    padsArray.push(new Pad(padImg1, x, -y - padHeight, padWidth, padHeight));
   }
 }
 
-//Player
+function createPlayer() {
+  const playerWidth = 243;
+  const playerHeight = 243;
 
-const player = new Player(CANVAS_WIDTH / 2 - 40, CANVAS_HEIGTH - 200, 243, 243);
+  if (padsArray.length !== 0 && padsArray !== null) {
+    const x = padsArray[0].x + 25;
+    const y = padsArray[0].y - 57;
+    player = new Player(x, y, playerWidth, playerHeight);
+  }
+}
 
 function animate() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
 
-  createPads();
+  if (platformDeleted) {
+    createPads(false);
+    platformDeleted = false;
+  }
   [...layersArray, ...padsArray].forEach((object) => {
     object.draw();
     object.update();
   });
-  padsArray = padsArray.filter((object) => !object.markedToDelete);
+
+  padsArray = padsArray.filter((object) => {
+    if (object.markedToDelete) platformDeleted = true;
+    return !object.markedToDelete;
+  });
 
   //
   player.draw();
   //
-
-  //movePlatforms()
-
   gameFrame++;
   requestAnimationFrame(animate);
 }
 
-
-function movePlatforms(){
-  if(player.y < 700){
-    padsArray.forEach( pad =>{
-      pad.y -= 4;
-    })
-  }
+function movePlayer(event) {
+  if (event.key === "ArrowLeft") player.moveLeft();
+  if (event.key === "ArrowRight") player.moveRight();
+  if (event.key === " ") player.jump();
+  // if (event.key === "ArrowDown") player.fall();
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("keydown", movePlayer);
+  createPads(true);
+  createPlayer();
   animate();
 });
