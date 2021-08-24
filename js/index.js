@@ -26,7 +26,7 @@ const padImg1 = new Image();
 padImg1.src = "../resources/img/pads/grass_pad.png";
 
 //Player
-let player = null; //hardcoded min y pos (2nd arg)
+let player = null;
 const playerSpriteWidth = 165;
 const playerSpriteHeight = 164;
 const spriteAnimations = [];
@@ -47,22 +47,20 @@ function createPads(isMultiplePads) {
       let x = Math.ceil(Math.random() * availableSpace);
       let y = i * gapBetweenPads;
       padsArray.unshift(
-        new Pad(padImg1, x, y - padHeight, padWidth, padHeight)
+        new Pad(padImg1, x, y - padHeight, padWidth, padHeight, i)
       );
     }
   } else {
     let x = Math.ceil(Math.random() * availableSpace);
     let y = gapBetweenPads;
-    padsArray.push(new Pad(padImg1, x, -y - padHeight, padWidth, padHeight));
+    padsArray.unshift(new Pad(padImg1, x, -y - padHeight, padWidth, padHeight));
   }
 }
 
 function createPlayer() {
-
-
   if (padsArray.length !== 0 && padsArray !== null) {
-    const x = padsArray[0].x + 23;
-    const y = padsArray[0].y - 69;
+    const x = padsArray[0].x + 23; // hardcoded
+    const y = padsArray[0].y - 69; //hardcoded
     player = new Player(x, y, playerSpriteWidth, playerSpriteHeight);
     charactersArray.push(player);
   }
@@ -108,7 +106,64 @@ function createPlayerSpriteAnimations() {
     spriteAnimations[state.name] = frames;
   });
 
-  console.log(spriteAnimations)
+  console.log(spriteAnimations);
+}
+
+function movePlayer(event) {
+  if (event.key === "ArrowLeft") player.moveLeft();
+  if (event.key === "ArrowRight") player.moveRight();
+  if (event.key === " ") player.jump();
+}
+
+function checkInPlatform(padsArray, playerObj) {
+  // if (//enemies
+  //   mockPlayer.x < mockPad + mockPad.width &&
+  //   mockPlayer.x + mockPlayer.width > mockPad.x &&
+  //   mockPlayer.y < mockPad.y + mockPad.height &&
+  //   mockPlayer.y + mockPlayer.height > mockPad.y
+  // ) {
+  //   //collision
+  // } else {
+  //   //no collision
+  // }
+  console.log(playerObj.state);
+  if (playerObj.state === "fallRight" || playerObj.state === "fallLeft") {
+    for (let i = padsArray.length - 1; i > 0; i--) {
+      const pad = padsArray[i];
+
+      // padsArray.forEach((pad) => {
+
+      // Player -  ctx.strokeRect(this.x+20,this.y + 20, this.width-40, this.height-40) // test
+      // Pad -  ctx.strokeRect(this.x + 5,this.y + 15, this.width - 10, this.height- 20) // test
+
+      const playerBottomLeftX = playerObj.x + 20;
+      const playerBottomLeftY = playerObj.y + 20 + (playerObj.height - 40);
+      const playerBottomRightX = playerObj.x + 20 + (playerObj.width - 40);
+      const playerBottomRightY = playerObj.y + 20 + (playerObj.height - 40);
+
+      const padTopLeftX = pad.x + 5;
+      const padTopLeftY = pad.y + 15;
+      const padTopRightX = pad.x + 5 + (pad.width - 10);
+      const padTopRightY = pad.y + 15;
+
+      if (
+        playerBottomLeftX >= padTopLeftX &&
+        playerBottomLeftY >= padTopLeftY &&
+        playerBottomRightX <= padTopRightX &&
+        playerBottomRightY >= padTopRightY
+      ) {
+       // ctx.fillRect(playerBottomLeftX, playerBottomLeftY, 5, 5); //test
+        //ctx.fillRect(playerBottomRightX, playerBottomRightY, 5, 5); //test
+       // ctx.fillRect(padTopLeftX, padTopLeftY, 5, 5); //test
+       // ctx.fillRect(padTopRightX, padTopRightY, 5, 5); //test
+
+        console.log("stop ");
+        playerObj.stop();
+      } else {
+      }
+    }
+    // });
+  }
 }
 
 function gameOver() {
@@ -123,6 +178,9 @@ function animate() {
     createPads(false);
     platformDeleted = false;
   }
+
+  checkInPlatform(padsArray, charactersArray[0]);
+
   [...layersArray, ...padsArray, ...charactersArray].forEach((object) => {
     object.draw();
     object.update();
@@ -133,18 +191,8 @@ function animate() {
     return !object.markedToDelete;
   });
 
-  // //
-  // player.draw();
-  // //
   gameFrame++;
   requestAnimationFrame(animate);
-}
-
-function movePlayer(event) {
-  if (event.key === "ArrowLeft") player.moveLeft();
-  if (event.key === "ArrowRight") player.moveRight();
-  if (event.key === " ") player.jump();
-  // if (event.key === "ArrowDown") player.fall();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

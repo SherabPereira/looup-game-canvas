@@ -18,6 +18,12 @@ class Player {
     this.position = 0;
     this.frameX = 0;
     this.frameY = 0;
+    this.stopped = false;
+    //
+    this.speedX = 0;
+    this.speedY = 0;
+    this.gravity = 0.05;
+    this.gravitySpeed = 0;
   }
 
   moveLeft() {
@@ -36,7 +42,8 @@ class Player {
     clearInterval(this.rightTimerId);
     this.leftTimerId = setInterval(() => {
       if (this.x > 0) this.x -= 5;
-    }, 35);
+
+    }, 20);
   }
 
   moveRight() {
@@ -55,22 +62,25 @@ class Player {
     clearInterval(this.leftTimerId);
     this.rightTimerId = setInterval(() => {
       if (this.x < CANVAS_WIDTH - this.width) this.x += 5;
-    }, 35);
+
+    }, 20);
   }
 
   jump() {
-    console.log(this.state);
+    if (this.stopped) return;
+    this.stopped = true;
+
     if (this.state == "moveLeft") this.state = "jumpLeft";
     if (this.state == "moveRight") this.state = "jumpRight";
 
     clearInterval(this.downTimerId);
     this.upTimerId = setInterval(() => {
       gameSpeed += 0.4;
-      this.y -= 8;
-      if (this.y < 500) {
+      this.y -= 10 ;
+      if (this.y < 400) {
         this.fall();
       }
-    }, 35);
+    }, 50);
   }
 
   fall() {
@@ -79,12 +89,25 @@ class Player {
     if (this.state === "jumpRight" || this.state === "moveRight")
       this.state = "fallRight";
 
+      // this.gravitySpeed += this.gravity;
+      // this.x += this.speedX;
+      // this.y += this.speedY + this.gravitySpeed; 
+
+      // this.gravitySpeed = 0;
+
     clearInterval(this.upTimerId);
     this.downTimerId = setInterval(() => {
-      gameSpeed -= 0.3;
-      this.y += 7;
+      gameSpeed -= 0.02;
+      this.y += 10;
       if (this.y >= CANVAS_HEIGTH) this.die();
     }, 35);
+  }
+
+  stop() {
+    this. stopped = false;
+    gameSpeed = 0;
+    clearInterval(this.downTimerId);
+    this.state = "moveRight";
   }
 
   die() {
@@ -105,6 +128,9 @@ class Player {
   }
 
   draw() {
+    ////
+    ctx.strokeRect(this.x+20,this.y + 20, this.width-40, this.height-40) // test
+    ////
     ctx.drawImage(
       this.image,
       this.frameX, //sx
