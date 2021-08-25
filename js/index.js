@@ -7,7 +7,8 @@ let gameFrame = 0;
 let numberOfPads = 5;
 let isGameOver = false;
 let platformDeleted = false;
-const staggerFrames = 5;
+
+//
 
 //Background Layers
 const backgroundLayer1 = new Image();
@@ -110,10 +111,18 @@ function createPlayerSpriteAnimations() {
 }
 
 function movePlayer(event) {
-  if (event.key === "ArrowLeft") player.moveLeft();
-  if (event.key === "ArrowRight") player.moveRight();
-  if (event.key === " ") player.jump();
+  if (event.type === "keyup" && event.key === " ") {
+    player.decelerate(0.1);
+  } else {
+    if (event.key === "ArrowLeft") player.moveLeft();
+    if (event.key === "ArrowRight") player.moveRight();
+    if (event.key === " ") {
+      player.accelerate(-0.55);
+    }
+  }
 }
+
+//si las dos, salta, despues de saltar se
 
 function checkInPlatform(padsArray, playerObj) {
   // if (//enemies
@@ -152,10 +161,10 @@ function checkInPlatform(padsArray, playerObj) {
         playerBottomRightX <= padTopRightX &&
         playerBottomRightY >= padTopRightY
       ) {
-       // ctx.fillRect(playerBottomLeftX, playerBottomLeftY, 5, 5); //test
+        // ctx.fillRect(playerBottomLeftX, playerBottomLeftY, 5, 5); //test
         //ctx.fillRect(playerBottomRightX, playerBottomRightY, 5, 5); //test
-       // ctx.fillRect(padTopLeftX, padTopLeftY, 5, 5); //test
-       // ctx.fillRect(padTopRightX, padTopRightY, 5, 5); //test
+        // ctx.fillRect(padTopLeftX, padTopLeftY, 5, 5); //test
+        // ctx.fillRect(padTopRightX, padTopRightY, 5, 5); //test
 
         console.log("stop ");
         playerObj.stop();
@@ -179,7 +188,9 @@ function animate() {
     platformDeleted = false;
   }
 
-  checkInPlatform(padsArray, charactersArray[0]);
+  checkInPlatform(padsArray, player);
+
+  player.jump();
 
   [...layersArray, ...padsArray, ...charactersArray].forEach((object) => {
     object.draw();
@@ -197,6 +208,7 @@ function animate() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", movePlayer);
+  document.addEventListener("keyup", movePlayer);
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
