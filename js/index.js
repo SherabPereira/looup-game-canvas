@@ -8,6 +8,10 @@ let numberOfPads = 5;
 let isGameOver = false;
 let platformDeleted = false;
 
+let isLeft = false;
+let isRight = false;
+let isSpace = false;
+
 //
 
 //Background Layers
@@ -60,8 +64,8 @@ function createPads(isMultiplePads) {
 
 function createPlayer() {
   if (padsArray.length !== 0 && padsArray !== null) {
-    const x = padsArray[0].x + 23; // hardcoded
-    const y = padsArray[0].y - 69; //hardcoded
+    const x = padsArray[0].x + 32; // hardcoded + 32
+    const y = padsArray[0].y - 100; //hardcoded - 69
     player = new Player(x, y, playerSpriteWidth, playerSpriteHeight);
     charactersArray.push(player);
   }
@@ -111,15 +115,13 @@ function createPlayerSpriteAnimations() {
 }
 
 function movePlayer(event) {
-  if (event.type === "keyup" && event.key === " ") {
-    player.decelerate(0.1);
-  } else {
-    if (event.key === "ArrowLeft") player.moveLeft();
-    if (event.key === "ArrowRight") player.moveRight();
-    if (event.key === " ") {
-      player.accelerate(-0.55);
-    }
-  }
+  if (event.key === "ArrowLeft") player.moveLeft();
+  if (event.key === "ArrowRight") player.moveRight();
+  if (event.key === " ") isSpace = true;
+}
+
+function keyUp(event) {
+  if (event.key === " ") isSpace = false;
 }
 
 //si las dos, salta, despues de saltar se
@@ -135,45 +137,65 @@ function checkInPlatform(padsArray, playerObj) {
   // } else {
   //   //no collision
   // }
-  console.log(playerObj.state);
-  if (playerObj.state === "fallRight" || playerObj.state === "fallLeft") {
-    for (let i = padsArray.length - 1; i > 0; i--) {
-      const pad = padsArray[i];
-
-      // padsArray.forEach((pad) => {
-
-      // Player -  ctx.strokeRect(this.x+20,this.y + 20, this.width-40, this.height-40) // test
-      // Pad -  ctx.strokeRect(this.x + 5,this.y + 15, this.width - 10, this.height- 20) // test
-
-      const playerBottomLeftX = playerObj.x + 20;
-      const playerBottomLeftY = playerObj.y + 20 + (playerObj.height - 40);
-      const playerBottomRightX = playerObj.x + 20 + (playerObj.width - 40);
-      const playerBottomRightY = playerObj.y + 20 + (playerObj.height - 40);
-
-      const padTopLeftX = pad.x + 5;
-      const padTopLeftY = pad.y + 15;
-      const padTopRightX = pad.x + 5 + (pad.width - 10);
-      const padTopRightY = pad.y + 15;
-
-      if (
-        playerBottomLeftX >= padTopLeftX &&
-        playerBottomLeftY >= padTopLeftY &&
-        playerBottomRightX <= padTopRightX &&
-        playerBottomRightY >= padTopRightY
-      ) {
-        // ctx.fillRect(playerBottomLeftX, playerBottomLeftY, 5, 5); //test
-        //ctx.fillRect(playerBottomRightX, playerBottomRightY, 5, 5); //test
-        // ctx.fillRect(padTopLeftX, padTopLeftY, 5, 5); //test
-        // ctx.fillRect(padTopRightX, padTopRightY, 5, 5); //test
-
-        console.log("stop ");
-        playerObj.stop();
-      } else {
-      }
+  // console.log(playerObj.state);
+  // if (playerObj.state === "fallRight" || playerObj.state === "fallLeft") {
+  for (let i = 0; i < padsArray.length; i++) {
+    const pad = padsArray[i];
+    // console.log("entered");
+    if (
+      playerObj.isColliding(pad) &&
+      player.y + player.height < pad.y + player.vy
+    ) {
+      player.y = pad.y - player.height;
+      // player.vy = 0;
+      console.log("stop ");
+      playerObj.stop();
     }
-    // });
+
+    // padsArray.forEach((pad) => {
+
+    // Player -  ctx.strokeRect(this.x+20,this.y + 20, this.width-40, this.height-40) // test
+    // Pad -  ctx.strokeRect(this.x + 5,this.y + 15, this.width - 10, this.height- 20) // test
+
+    // const playerBottomLeftX = playerObj.x + 20;
+    // const playerBottomLeftY = playerObj.y + 20 + (playerObj.height - 40);
+    // const playerBottomRightX = playerObj.x + 20 + (playerObj.width - 40);
+    // const playerBottomRightY = playerObj.y + 20 + (playerObj.height - 40);
+
+    // const padTopLeftX = pad.x + 5;
+    // const padTopLeftY = pad.y + 15;
+    // const padTopRightX = pad.x + 5 + (pad.width - 10);
+    // const padTopRightY = pad.y + 15;
+
+    // if (
+    //   playerBottomLeftX >= padTopLeftX &&
+    //   playerBottomLeftY >= padTopLeftY &&
+    //   playerBottomRightX <= padTopRightX &&
+    //   playerBottomRightY >= padTopRightY
+    // ) {
+    //   // ctx.fillRect(playerBottomLeftX, playerBottomLeftY, 5, 5); //test
+    //   //ctx.fillRect(playerBottomRightX, playerBottomRightY, 5, 5); //test
+    //   // ctx.fillRect(padTopLeftX, padTopLeftY, 5, 5); //test
+    //   // ctx.fillRect(padTopRightX, padTopRightY, 5, 5); //test
+
+    //   console.log("stop ");
+    //   playerObj.stop();
+    // } else {
+    // }
   }
+  // });
+  // }
 }
+
+// function keyDown(e) {
+//   if (e.key === "ArrowLeft") isLeft = true;
+//   if (e.key === "ArrowRight") isRight = true;
+// }
+
+// function keyUp(e) {
+//   if (e.key === "ArrowLeft") isLeft = false;
+//   if (e.key === "ArrowRight") isRight = false;
+// }
 
 function gameOver() {
   console.log("over");
@@ -189,8 +211,6 @@ function animate() {
   }
 
   checkInPlatform(padsArray, player);
-
-  player.jump();
 
   [...layersArray, ...padsArray, ...charactersArray].forEach((object) => {
     object.draw();
@@ -208,7 +228,7 @@ function animate() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", movePlayer);
-  document.addEventListener("keyup", movePlayer);
+  document.addEventListener("keyup", keyUp);
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();

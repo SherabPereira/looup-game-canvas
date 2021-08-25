@@ -7,12 +7,11 @@ class Pad {
     this.image = image;
     this.speed = gameSpeed;
     this.markedToDelete = false;
-
   }
 
   draw() {
     ///
-    ctx.strokeRect(this.x + 5,this.y + 15, this.width - 10, this.height- 20) // test
+    ctx.strokeRect(this.x, this.y, this.width, this.height); // test
     ////
 
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
