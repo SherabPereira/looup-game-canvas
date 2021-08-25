@@ -59,36 +59,6 @@ class Player {
     isLeft = false;
   }
 
-  // jump() {
-  //   //   if (this.stopped) return;
-  //   //   this.stopped = true;
-
-  //   if (isSpace && this.vy === 0) {
-  //     if (this.state == "moveLeft") this.state = "jumpLeft";
-  //     if (this.state == "moveRight") this.state = "jumpRight";
-  //     this.vy = -5;
-  //   }
-
-  //   clearInterval(this.downTimerId);
-  //   this.upTimerId = setInterval(() => {
-  //     gameSpeed += 0.4;
-  //     this.y -= 10 ;
-  //     if (this.y < 400) {
-  //       this.fall();
-  //     }
-  //   }, 50);
-  // }
-
-  // fall() {
-
-  //   clearInterval(this.upTimerId);
-  //   this.downTimerId = setInterval(() => {
-  //     gameSpeed -= 0.02;
-  //     this.y += 10;
-  //     if (this.y >= CANVAS_HEIGTH) this.die();
-  //   }, 35);
-  // }
-
   jump() {
     if (!isLeft && !isRight) this.vx = 0;
 
