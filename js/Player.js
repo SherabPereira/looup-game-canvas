@@ -74,12 +74,7 @@ class Player {
     if (this.vy < this.gravity) this.vy += this.weight;
   }
 
-  die() {
-    this.y = CANVAS_HEIGTH + this.height;
-    gameSpeed = 0;
-    this.alive = false;
-  }
-
+ 
   stop() {
     gameSpeed = 0;
     this.vy = 0;
@@ -103,7 +98,7 @@ class Player {
 
   draw() {
     ////
-    ctx.strokeRect(this.x, this.y, this.width, this.height); // test
+    //ctx.strokeRect(this.x, this.y, this.width, this.height); // test
     ////
     ctx.drawImage(
       this.image,

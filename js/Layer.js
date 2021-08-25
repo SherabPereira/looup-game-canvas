@@ -6,18 +6,20 @@ class Layer {
     this.height = height;
     this.image = image;
     this.speedModifier = speedModifier;
-    this.speed = gameSpeed * this.speedModifier;
+    this.speed = 0;
   }
 
   draw() {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-    ctx.drawImage(
-      this.image,
-      this.x,
-      this.y - this.height + 1,
-      this.width,
-      this.height
-    );
+   
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      ctx.drawImage(
+        this.image,
+        this.x,
+        this.y - this.height + 1,
+        this.width,
+        this.height
+      );
+  
   }
 
   update() {

@@ -12,7 +12,7 @@ class Pad {
 
   draw() {
     ///
-    ctx.strokeRect(this.x, this.y, this.width, this.height); // test
+    //ctx.strokeRect(this.x, this.y, this.width, this.height); // test
     ////
 
     ctx.drawImage(this.image, this.x, this.y - 18, this.width, this.height);

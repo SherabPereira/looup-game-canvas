@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'Bubble-jelly';
+    src: url('../resources/fonts/bubble_jelly/Bubble\ Jelly.ttf');
+}
+
+@font-face {
+    font-family: 'Questrian';
+    src: url('../resources/fonts/questrian/Questrian.otf');
+}
+
+@font-face {
+    font-family: 'Sound-bubble';
+    src: url('../resources/fonts/sound_bubble/Sound\ Bubble\ DEMO.otf');
+}
+
 #game-area {
     position: absolute;
     border: 2px solid black;
@@ -6,4 +21,5 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+ 
 }
