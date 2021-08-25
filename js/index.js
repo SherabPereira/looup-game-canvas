@@ -22,9 +22,10 @@ let isSpace = false;
 
 //Background Layers
 const backgroundLayer1 = new Image();
-backgroundLayer1.src = "../resources/img/backgrounds/background.png";
+
+backgroundLayer1.src = "./../resources/img/backgrounds/background.png";
 const backgroundLayer2 = new Image();
-backgroundLayer2.src = "../resources/img/backgrounds/cloud-group.png";
+backgroundLayer2.src = "./../resources/img/backgrounds/cloud-group.png";
 
 const layersArray = [
   new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, layer1SpeedModifier),
@@ -34,7 +35,7 @@ const layersArray = [
 // Pads
 let padsArray = [];
 const padImg1 = new Image();
-padImg1.src = "../resources/img/pads/grass_pad.png";
+padImg1.src = "./../resources/img/pads/grass_pad.png";
 
 //Player
 let player = null;
