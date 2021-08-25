@@ -1,5 +1,5 @@
 class Pad {
-  constructor(image, x, y, width, height) {
+  constructor(image, x, y, width, height, name) {
     this.y = y;
     this.x = Math.random() * x;
     this.width = width;
@@ -7,10 +7,13 @@ class Pad {
     this.image = image;
     this.speed = gameSpeed;
     this.markedToDelete = false;
-  
   }
 
   draw() {
+    ///
+    ctx.strokeRect(this.x, this.y, this.width, this.height); // test
+    ////
+
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
