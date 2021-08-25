@@ -5,14 +5,14 @@ class Player {
     this.image.src = "../resources/img/sprites/player.png";
     this.spriteWidth = spriteWidth;
     this.spriteHeight = spriteHeight;
-    this.width = this.spriteWidth / 1.5 - 50;
-    this.height = this.spriteHeight / 1.5 - 57;
-    this.x = x + 25;
-    this.y = y + 28;
+    this.width = this.spriteWidth / 2.78;
+    this.height = this.spriteHeight / 3.15;
+    this.x = x;
+    this.y = y;
     this.vx = 0;
     this.vy = 0;
     this.gravity = 20;
-    this.weight = 0.1;
+    this.weight = 0.21;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;
@@ -35,10 +35,7 @@ class Player {
       this.state = "fallLeft";
     }
 
-    if (this.vx > 0) player.vx = -3;
-
-    isLeft = true;
-    isRight = false;
+    if (this.x > 0) player.vx = -3;
   }
 
   moveRight() {
@@ -53,21 +50,20 @@ class Player {
     ) {
       this.state = "moveRight";
     }
-    if (this.vx < CANVAS_WIDTH - this.width) player.vx = 3;
 
-    isRight = true;
-    isLeft = false;
+    if (this.vx < CANVAS_WIDTH - this.width) player.vx = 3;
   }
 
-  jump() {
+  jumpFall() {
+    gameSpeed -= this.vy / 52;
+
     if (!isLeft && !isRight) this.vx = 0;
 
     if (isSpace && this.vy === 0) {
       if (this.state == "moveLeft") this.state = "jumpLeft";
       if (this.state == "moveRight") this.state = "jumpRight";
-      this.vy = -6.9;
+      this.vy = -8;
     }
-
     if (!isSpace && this.vy !== 0) {
       if (this.state === "jumpLeft" || this.state === "moveLeft")
         this.state = "fallLeft";
@@ -123,14 +119,11 @@ class Player {
   }
 
   update() {
-    console.log(this.state);
-
     this.x += player.vx;
     this.y += player.vy;
 
-    this.jump();
+    this.jumpFall();
 
-    console.log(this.framePosition, this.state);
     this.framePosition =
       Math.floor(this.frame / 6) % spriteAnimations[this.state].loc.length;
 

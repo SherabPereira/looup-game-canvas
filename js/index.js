@@ -4,9 +4,12 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 let gameSpeed = 0; // minus go down, plus go up
 let gameFrame = 0;
-let numberOfPads = 5;
+let numberOfPads = 10;
 let isGameOver = false;
 let platformDeleted = false;
+const padSpeedModifier = 2;
+const layer1SpeedModifier = 0.5;
+const layer2SpeedModifier = 1;
 
 let isLeft = false;
 let isRight = false;
@@ -21,8 +24,8 @@ const backgroundLayer2 = new Image();
 backgroundLayer2.src = "../resources/img/backgrounds/cloud-group.png";
 
 const layersArray = [
-  new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, 0.2),
-  new Layer(backgroundLayer2, CANVAS_WIDTH, CANVAS_HEIGTH, 0.4),
+  new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, layer1SpeedModifier),
+  new Layer(backgroundLayer2, CANVAS_WIDTH, CANVAS_HEIGTH, layer2SpeedModifier),
 ];
 
 // Pads
@@ -44,7 +47,7 @@ let charactersArray = [];
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
-  const gapBetweenPads = CANVAS_HEIGTH / numberOfPads + 30;
+  const gapBetweenPads = (CANVAS_HEIGTH + 70) / numberOfPads;
   const availableSpace = CANVAS_WIDTH - padWidth;
 
   if (isMultiplePads) {
@@ -52,13 +55,22 @@ function createPads(isMultiplePads) {
       let x = Math.ceil(Math.random() * availableSpace);
       let y = i * gapBetweenPads;
       padsArray.unshift(
-        new Pad(padImg1, x, y - padHeight, padWidth, padHeight, i)
+        new Pad(
+          padImg1,
+          x,
+          y - padHeight,
+          padWidth,
+          padHeight,
+          padSpeedModifier
+        )
       );
     }
   } else {
     let x = Math.ceil(Math.random() * availableSpace);
     let y = gapBetweenPads;
-    padsArray.unshift(new Pad(padImg1, x, -y - padHeight, padWidth, padHeight));
+    padsArray.push(
+      new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
+    );
   }
 }
 
@@ -114,43 +126,38 @@ function createPlayerSpriteAnimations() {
   console.log(spriteAnimations);
 }
 
-function movePlayer(event) {
-  if (event.key === "ArrowLeft") player.moveLeft();
-  if (event.key === "ArrowRight") player.moveRight();
+function keyDown(event) {
+  if (event.key === "ArrowLeft") {
+    isLeft = true;
+    player.moveLeft();
+  }
+  if (event.key === "ArrowRight") {
+    isRight = true;
+    player.moveRight();
+  }
   if (event.key === " ") isSpace = true;
 }
 
 function keyUp(event) {
   if (event.key === " ") isSpace = false;
+  if (event.key === "ArrowLeft") isLeft = false;
+  if (event.key === "ArrowRight") isRight = false;
 }
-
-//si las dos, salta, despues de saltar se
 
 function checkInPlatform(padsArray, playerObj) {
   for (let i = 0; i < padsArray.length; i++) {
     const pad = padsArray[i];
-    // console.log("entered");
+
     if (
       playerObj.isColliding(pad) &&
       player.y + player.height < pad.y + player.vy
     ) {
-      player.y = pad.y - player.height;
-      // player.vy = 0;
+      player.y = pad.y - player.height ;
       console.log("stop ");
       playerObj.stop();
     }
   }
 }
-
-// function keyDown(e) {
-//   if (e.key === "ArrowLeft") isLeft = true;
-//   if (e.key === "ArrowRight") isRight = true;
-// }
-
-// function keyUp(e) {
-//   if (e.key === "ArrowLeft") isLeft = false;
-//   if (e.key === "ArrowRight") isRight = false;
-// }
 
 function gameOver() {
   console.log("over");
@@ -182,7 +189,7 @@ function animate() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener("keydown", movePlayer);
+  document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
   createPads(true);
   createPlayerSpriteAnimations();
