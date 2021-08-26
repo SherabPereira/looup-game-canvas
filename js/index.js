@@ -6,7 +6,7 @@ const CANVAS_HEIGTH = (canvas.height = 900);
 const scoreCtx = document.querySelector("#score").getContext("2d");
 
 let gameSpeed = 0;
-let numberOfPads = 11;
+let numberOfPads = 10;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
@@ -176,15 +176,22 @@ function checkInPlatform(padsArray, playerObj) {
 }
 
 function checkEnemyCollisions(enemiesArray, playerObj) {
-  for (let i = 0; i < enemiesArray.length; i++) {
-    const enemy = enemiesArray[i];
-    if (playerObj.isColliding(enemy)) {
-      player.stop();
-      gameOver();
-      return true;
+  // for (let i = 0; i < enemiesArray.length; i++) {
+  //   const enemy = enemiesArray[i];
+  //   if (playerObj.isColliding(enemy)) {
+  //     player.stop();
+  //     gameOver();
+  //     return true;
+  //   }
+  // }
+  enemiesArray.forEach((enemy) => {
+    if (enemy.isColliding(playerObj)) {
+      isGameover = true;
+      player.width = 0;
+      player.height = 0;
+      player.y += 20;
     }
-  }
-  return false;
+  });
 }
 
 function updateScore() {
@@ -228,7 +235,7 @@ function animate() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
   scoreCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
 
-  if (player.y + player.height > CANVAS_HEIGTH) gameOver();
+  if (player.y + player.height > CANVAS_HEIGTH || isGameover) gameOver();
 
   if (gameSpeed > 0.3) {
     upFrames++;
@@ -238,9 +245,9 @@ function animate() {
     createPads(false);
     platformDeleted = false;
   }
-  if (!checkEnemyCollisions(enemiesArray, player)) {
-    checkInPlatform(padsArray, player);
-  }
+
+  checkEnemyCollisions(enemiesArray, player);
+  checkInPlatform(padsArray, player);
 
   [...layersArray, ...padsArray, ...charactersArray, ...enemiesArray].forEach(
     (object) => {

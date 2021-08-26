@@ -12,7 +12,7 @@ class Player {
     this.vx = 0;
     this.vy = 0;
     this.gravity = 20;
-    this.weight = 0.22;
+    this.weight = 0.20;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;
@@ -97,9 +97,7 @@ class Player {
   }
 
   draw() {
-    ////
-    //ctx.strokeRect(this.x, this.y, this.width, this.height); // test
-    ////
+ 
     ctx.drawImage(
       this.image,
       this.frameX + 25, //sx
