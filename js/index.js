@@ -21,24 +21,36 @@ let isLeft = false;
 let isRight = false;
 let isSpace = false;
 
+let enemiesOneIntervalId = null;
+let enemiesTwoIntervalId = null;
+
 //
 
 //Background Layers
 const backgroundLayer1 = new Image();
 
-backgroundLayer1.src = "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/background.png";
+backgroundLayer1.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/background.png";
 const backgroundLayer2 = new Image();
-backgroundLayer2.src = "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/cloud-group.png";
+backgroundLayer2.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/cloud-group.png";
 
 const layersArray = [
   new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, layer1SpeedModifier),
   new Layer(backgroundLayer2, CANVAS_WIDTH, CANVAS_HEIGTH, layer2SpeedModifier),
 ];
 
+// Sound and SFX
+
+// const jumSound = new sound("bounce.mp3");
+// const collisionSound = new sound("gametheme.mp3");
+const gameTheme = new sound("../resources/sound/gametheme.mp3");
+
 // Pads
 let padsArray = [];
 const padImg1 = new Image();
-padImg1.src = "https://origenz.github.io/looup-game-canvas/resources/img/pads/grass_pad.png";
+padImg1.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/pads/grass_pad.png";
 
 //Player
 let player = null;
@@ -135,10 +147,10 @@ function createPlayerSpriteAnimations() {
 }
 
 function createEnemies() {
-  setInterval(() => {
+  enemiesOneIntervalId = setInterval(() => {
     enemiesArray.push(new Bee());
   }, 4800);
-  setInterval(() => {
+  enemiesTwoIntervalId = setInterval(() => {
     enemiesArray.push(new Ghost());
   }, 7000);
 }
@@ -176,20 +188,14 @@ function checkInPlatform(padsArray, playerObj) {
 }
 
 function checkEnemyCollisions(enemiesArray, playerObj) {
-  // for (let i = 0; i < enemiesArray.length; i++) {
-  //   const enemy = enemiesArray[i];
-  //   if (playerObj.isColliding(enemy)) {
-  //     player.stop();
-  //     gameOver();
-  //     return true;
-  //   }
-  // }
   enemiesArray.forEach((enemy) => {
     if (enemy.isColliding(playerObj)) {
       isGameover = true;
       player.width = 0;
       player.height = 0;
       player.y = CANVAS_WIDTH;
+      clearInterval(enemiesOneIntervalId);
+      clearInterval(enemiesTwoIntervalId);
     }
   });
 }
@@ -231,6 +237,22 @@ function gameOver() {
   ctx.textAlign = "start";
 }
 
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+
+  this.play = function () {
+    this.sound.play();
+  };
+  this.stop = function () {
+    this.sound.pause();
+  };
+}
+
 function animate() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
   scoreCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
@@ -268,6 +290,7 @@ function animate() {
 
   if (!isGameover) updateScore();
   gameFrame++;
+
   requestAnimationFrame(animate);
 }
 
@@ -279,4 +302,5 @@ document.addEventListener("DOMContentLoaded", () => {
   createPlayer();
   createEnemies();
   animate();
+  gameTheme.play();
 });

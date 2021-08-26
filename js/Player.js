@@ -2,7 +2,8 @@ class Player {
   constructor(x, y, spriteWidth, spriteHeight) {
     this.state = "moveRight";
     this.image = new Image();
-    this.image.src = "https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png";
+    this.image.src =
+      "https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png";
     this.spriteWidth = spriteWidth;
     this.spriteHeight = spriteHeight;
     this.width = this.spriteWidth / 2.78;
@@ -11,8 +12,8 @@ class Player {
     this.y = y;
     this.vx = 0;
     this.vy = 0;
-    this.gravity = 20;
-    this.weight = 0.20;
+    this.gravity = 2;
+    this.weight = 0.2;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;
@@ -51,7 +52,7 @@ class Player {
       this.state = "moveRight";
     }
 
-    if (this.vx < CANVAS_WIDTH - this.width) player.vx = 3;
+    if (this.x < CANVAS_WIDTH) player.vx = 3;
   }
 
   jumpFall() {
@@ -70,7 +71,6 @@ class Player {
       if (this.state === "jumpRight" || this.state === "moveRight")
         this.state = "fallRight";
     }
-
     if (this.vy < this.gravity) this.vy += this.weight;
   }
 
@@ -89,7 +89,6 @@ class Player {
       this.y > obj.y + obj.height ||
       this.y + this.height < obj.y
     ) {
- 
       return false;
     }
 
@@ -97,7 +96,6 @@ class Player {
   }
 
   draw() {
- 
     ctx.drawImage(
       this.image,
       this.frameX + 25, //sx
