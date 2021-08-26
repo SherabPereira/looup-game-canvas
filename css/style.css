@@ -3,8 +3,23 @@
     src: url('../resources/fonts/questrian/Questrian.otf');
 }
 
+body {
+    height: 100vh;
+    margin: 0;
+    background: rgb(82, 179, 218);
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 #game-area {
- 
     position: absolute;
     width: 900px;
     height: 900px;
@@ -17,6 +32,48 @@
     position: absolute;
     width: 900px;
     height: 900px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn {
+    z-index: 1;
+    box-sizing: border-box;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid whitesmoke;
+    border-radius: 0.6em;
+    color: whitesmoke;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    margin: 20px;
+    padding: 1.2em 2.8em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: box-shadow 250ms ease-in-out, color 300ms ease-in-out;
+}
+
+.btn:hover, .btn:focus {
+    box-shadow: 0 0 40px 40px white inset;
+    color: #52b3da;
+    outline: 0;
+}
+
+/* .btn:hover+i, .btn:focus+ii {
+    box-shadow: 0 0 40px 40px #52b3da inset;
+    color: #52b3da;
+} */
+
+.play {
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

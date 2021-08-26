@@ -5,10 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LOOUP!</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <canvas id="game-area"></canvas>
+    <nav>
+      <div class="nav-wrapper">
+        <button class="btn sound-on-of">
+          <i class="fas fa-volume-mute"></i>
+        </button>
+        <button class="btn instructions">
+          <i class="fas fa-volume-up"></i>
+        </button>
+        <button class="btn instructions">
+          <i class="fas fa-question"></i>
+        </button>
+      </div>
+    </nav>
+    <canvas id="game-area"> </canvas>
+    <!-- <button class="btn play">Play</button> -->
+
     <canvas id="score" width="900" height="900"></canvas>
     <script src="./js/Pad.js"></script>
     <script src="./js/Layer.js"></script>

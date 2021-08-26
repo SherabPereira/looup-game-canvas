@@ -241,11 +241,13 @@ function sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("muted", "true");
   this.sound.setAttribute("controls", "none");
   this.sound.style.display = "none";
   document.body.appendChild(this.sound);
 
   this.play = function () {
+    this.sound.setAttribute("muted", "false");
     this.sound.play();
   };
   this.stop = function () {
@@ -297,10 +299,11 @@ function animate() {
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
-  createPads(true);
+ createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
   createEnemies();
   animate();
   gameTheme.play();
 });
+
