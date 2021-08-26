@@ -44,7 +44,7 @@ const layersArray = [
 
 // const jumSound = new sound("bounce.mp3");
 // const collisionSound = new sound("gametheme.mp3");
-const gameTheme = new sound("../resources/sound/gametheme.mp3");
+const gameTheme = new sound("https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.mp3");
 
 // Pads
 let padsArray = [];
