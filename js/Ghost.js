@@ -1,7 +1,7 @@
 class Ghost {
   constructor() {
     this.image = new Image();
-    this.image.src = "../resources/img/sprites/ghost_enemy.png";
+    this.image.src = "https://origenz.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png";
     this.speed = Math.random() * 3 + 1;
     this.spriteWidth = 160;
     this.spriteHeight = 237.5;

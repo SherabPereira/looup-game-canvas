@@ -2,7 +2,7 @@ class Player {
   constructor(x, y, spriteWidth, spriteHeight) {
     this.state = "moveRight";
     this.image = new Image();
-    this.image.src = "./../resources/img/sprites/player.png";
+    this.image.src = "https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png";
     this.spriteWidth = spriteWidth;
     this.spriteHeight = spriteHeight;
     this.width = this.spriteWidth / 2.78;

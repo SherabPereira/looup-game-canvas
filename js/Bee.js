@@ -1,7 +1,7 @@
 class Bee {
   constructor() {
     this.image = new Image();
-    this.image.src = "../resources/img/sprites/bee_enemy.png";
+    this.image.src = "https://origenz.github.io/looup-game-canvas/resources/img/sprites/bee_enemy.png";
     this.speed = Math.random() * 4 + 1;
     this.spriteWidth = 273;
     this.spriteHeight = 282;
