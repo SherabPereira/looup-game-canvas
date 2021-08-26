@@ -3,14 +3,17 @@ const ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
+const scoreCtx = document.querySelector("#score").getContext("2d");
+
 let gameSpeed = 0;
-let gameFrames = 1;
-let numberOfPads = 10;
+let numberOfPads = 11;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
+let upFrames = 0;
+let gameFrame = 0;
 
-const padSpeedModifier = 2;
+const padSpeedModifier = 1.7;
 const layer1SpeedModifier = 0.5;
 const layer2SpeedModifier = 1;
 
@@ -47,6 +50,9 @@ let playerAnimationStates = [];
 //Characters
 let charactersArray = [];
 
+//Enemies
+let enemiesArray = [];
+
 // Functions
 function createPads(isMultiplePads) {
   const padWidth = 150;
@@ -56,7 +62,7 @@ function createPads(isMultiplePads) {
 
   if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
-      let x = Math.ceil(Math.random() * availableSpace);
+      let x = Math.round(Math.random() * availableSpace);
       let y = i * gapBetweenPads;
       padsArray.unshift(
         new Pad(
@@ -128,6 +134,15 @@ function createPlayerSpriteAnimations() {
   });
 }
 
+function createEnemies() {
+  setInterval(() => {
+    enemiesArray.push(new Bee());
+  }, 4800);
+  setInterval(() => {
+    enemiesArray.push(new Ghost());
+  }, 7000);
+}
+
 function keyDown(event) {
   if (event.key === "ArrowLeft") {
     isLeft = true;
@@ -152,7 +167,7 @@ function checkInPlatform(padsArray, playerObj) {
 
     if (
       playerObj.isColliding(pad) &&
-      player.y + player.height < pad.y + player.vy
+      player.y + player.height < pad.y + (player.vy - 0.01)
     ) {
       player.y = pad.y - player.height;
       playerObj.stop();
@@ -160,19 +175,30 @@ function checkInPlatform(padsArray, playerObj) {
   }
 }
 
+function checkEnemyCollisions(enemiesArray, playerObj) {
+  for (let i = 0; i < enemiesArray.length; i++) {
+    const enemy = enemiesArray[i];
+    if (playerObj.isColliding(enemy)) {
+      player.stop();
+      gameOver();
+      return true;
+    }
+  }
+  return false;
+}
+
 function updateScore() {
-  if (gameFrames % 10 === 0) score++;
-  ctx.font = "35px Questrian";
-  ctx.fillStyle = "#c7b299";
-  ctx.strokeStyle = "#FFFFFF";
-  ctx.fillText(`Score • ${score}`, 20, 55);
-  //define the width of the stroke line
-  ctx.lineWidth = 2;
-  ctx.strokeText(`Score • ${score}`, 20, 55);
+  scoreCtx.font = "35px Questrian";
+  scoreCtx.fillStyle = "#4ea640";
+  scoreCtx.strokeStyle = "#FFFFFF";
+  scoreCtx.fillText(`Score • ${score}`, 20, 55);
+
+  scoreCtx.lineWidth = 2;
+  scoreCtx.strokeText(`Score • ${score}`, 20, 55);
 }
 
 function gameOver() {
-  isGameOver = true;
+  canvas.style.zIndex = "1";
 
   ctx.fillStyle = "#52b3da";
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH + 50);
@@ -186,9 +212,9 @@ function gameOver() {
   ctx.fillText(`GAME OVER`, CANVAS_WIDTH / 2, 350);
   ctx.strokeText(`GAME OVER`, CANVAS_WIDTH / 2, 350);
 
-  ctx.font = "80px Questrian";
-  ctx.fillText(`Your final score :`, CANVAS_WIDTH / 2, 450);
-  ctx.strokeText(`Your final score :`, CANVAS_WIDTH / 2, 450);
+  ctx.font = "78px Questrian";
+  ctx.fillText(`Your final score is`, CANVAS_WIDTH / 2, 450);
+  ctx.strokeText(`Your final score is`, CANVAS_WIDTH / 2, 450);
 
   ctx.font = "120px Questrian";
 
@@ -200,28 +226,41 @@ function gameOver() {
 
 function animate() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
+  scoreCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH);
 
   if (player.y + player.height > CANVAS_HEIGTH) gameOver();
-  if (gameSpeed > 0.2) gameFrames++;
+
+  if (gameSpeed > 0.3) {
+    upFrames++;
+    score += Math.ceil((upFrames % 2) / 2);
+  }
   if (platformDeleted) {
     createPads(false);
     platformDeleted = false;
   }
+  if (!checkEnemyCollisions(enemiesArray, player)) {
+    checkInPlatform(padsArray, player);
+  }
 
-  checkInPlatform(padsArray, player);
+  [...layersArray, ...padsArray, ...charactersArray, ...enemiesArray].forEach(
+    (object) => {
+      object.draw();
+      object.update();
+    }
+  );
 
-  [...layersArray, ...padsArray, ...charactersArray].forEach((object) => {
-    object.draw();
-    object.update();
+  padsArray = padsArray.filter((pad) => {
+    if (pad.markedToDelete) platformDeleted = true;
+    return !pad.markedToDelete;
   });
 
-  padsArray = padsArray.filter((object) => {
-    if (object.markedToDelete) platformDeleted = true;
-    return !object.markedToDelete;
+  enemiesArray = enemiesArray.filter((enemy) => {
+    if (enemy.markedToDelete) console.log("deleted");
+    return !enemy.markedToDelete;
   });
 
-  updateScore();
-
+  if (!isGameover) updateScore();
+  gameFrame++;
   requestAnimationFrame(animate);
 }
 
@@ -231,6 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
-
+  createEnemies();
   animate();
 });

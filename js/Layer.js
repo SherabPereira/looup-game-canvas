@@ -10,21 +10,19 @@ class Layer {
   }
 
   draw() {
-   
-      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-      ctx.drawImage(
-        this.image,
-        this.x,
-        this.y - this.height + 1,
-        this.width,
-        this.height
-      );
-  
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    ctx.drawImage(
+      this.image,
+      this.x,
+      this.y - this.height + 1,
+      this.width,
+      this.height
+    );
   }
 
   update() {
     this.speed = gameSpeed * this.speedModifier;
     if (this.y >= this.height) this.y = 0;
-    this.y = this.y + this.speed;
+    this.y += this.speed;
   }
 }

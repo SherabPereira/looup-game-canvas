@@ -12,7 +12,7 @@ class Player {
     this.vx = 0;
     this.vy = 0;
     this.gravity = 20;
-    this.weight = 0.21;
+    this.weight = 0.22;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;
@@ -62,7 +62,7 @@ class Player {
     if (isSpace && this.vy === 0) {
       if (this.state == "moveLeft") this.state = "jumpLeft";
       if (this.state == "moveRight") this.state = "jumpRight";
-      this.vy = -8;
+      this.vy = -7.9;
     }
     if (!isSpace && this.vy !== 0) {
       if (this.state === "jumpLeft" || this.state === "moveLeft")
@@ -74,7 +74,6 @@ class Player {
     if (this.vy < this.gravity) this.vy += this.weight;
   }
 
- 
   stop() {
     gameSpeed = 0;
     this.vy = 0;
@@ -90,6 +89,7 @@ class Player {
       this.y > obj.y + obj.height ||
       this.y + this.height < obj.y
     ) {
+ 
       return false;
     }
 
