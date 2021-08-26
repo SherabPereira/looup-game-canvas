@@ -6,7 +6,7 @@ const CANVAS_HEIGTH = (canvas.height = 900);
 const scoreCtx = document.querySelector("#score").getContext("2d");
 
 let gameSpeed = 0;
-let numberOfPads = 10;
+let numberOfPads = 9;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
@@ -44,7 +44,9 @@ const layersArray = [
 
 // const jumSound = new sound("bounce.mp3");
 // const collisionSound = new sound("gametheme.mp3");
-const gameTheme = new sound("https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.mp3");
+const gameTheme = new sound(
+  "https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.mp3"
+);
 
 // Pads
 let padsArray = [];
@@ -250,8 +252,12 @@ function sound(src) {
     this.sound.setAttribute("muted", "false");
     this.sound.play();
   };
-  this.stop = function () {
+  this.pause = function () {
     this.sound.pause();
+  };
+  this.stop = function () {
+    this.pause();
+    this.currentTime = 0;
   };
 }
 
@@ -299,11 +305,17 @@ function animate() {
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
- createPads(true);
+
+  document
+    .querySelector(".on")
+    .addEventListener("click", () => gameTheme.play());
+  document
+    .querySelector(".off")
+    .addEventListener("click", () => gameTheme.stop());
+
+  createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
   createEnemies();
   animate();
-  gameTheme.play();
 });
-

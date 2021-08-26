@@ -56,7 +56,7 @@ class Player {
   }
 
   jumpFall() {
-    gameSpeed -= this.vy / 52;
+    gameSpeed -= this.vy / 53;
 
     if (!isLeft && !isRight) this.vx = 0;
 
