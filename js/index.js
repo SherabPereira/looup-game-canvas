@@ -331,7 +331,6 @@ function startGame() {
     a.style.display = "none";
   });
 
-  loadModal();
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
@@ -365,6 +364,7 @@ function loadModal() {
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
+  loadModal();
   document
     .querySelector(".on")
     .addEventListener("click", () => gameTheme.play());
@@ -378,5 +378,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".replay").addEventListener("click", () => {
     window.location.reload();
   });
-
 });
