@@ -175,7 +175,6 @@ nav {
     border: 0px;
     font-weight: bold;
     cursor: pointer;
-  
 }
 
 .game-controls, .game-instructions {
@@ -183,7 +182,7 @@ nav {
     line-height: 3rem;
 }
 
-.game-controls img{
+.game-controls img {
     width: 20rem;
     height: auto
 }

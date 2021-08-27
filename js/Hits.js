@@ -11,9 +11,7 @@ class Hits {
     this.size = size;
     this.frame = 0;
     this.sound = new Audio();
-    // this.sound.src =
-    //   "https://origenz.github.io/looup-game-canvas/resources/sound/hit.wav";
-    this.sound.src = "../resources/sound/ded.wav";
+    this.sound.src = "https://origenz.github.io/looup-game-canvas/resources/sound/ded.wav";
     this.markedToDelete = false;
     this.isTriggered = false;
   }

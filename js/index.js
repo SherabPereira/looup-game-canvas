@@ -223,9 +223,6 @@ function updateScore() {
 }
 
 function gameOver() {
-  // player.y = CANVAS_HEIGTH;
-  // player.x = CANVAS_WIDTH;
-
   padsArray = [];
   clearInterval(enemiesOneIntervalId);
   clearInterval(enemiesTwoIntervalId);
