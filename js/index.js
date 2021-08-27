@@ -13,7 +13,7 @@ let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.5;
+const padSpeedModifier = 1.4;
 const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
 
