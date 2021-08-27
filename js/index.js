@@ -333,7 +333,7 @@ function startGame() {
   createPlayer();
   createEnemies();
   animate();
-  // gameTheme.play();
+  gameTheme.play();
 }
 
 function restartGameButton() {
