@@ -65,13 +65,29 @@ nav {
     outline: 0;
 }
 
-.brand {
+/* .brand {
     position: relative;
     margin: 0 auto;
     margin-top: -10rem;
     height: 30rem;
     text-align: center;
     transition: 1s ease-in-out;
+}
+ */
+
+.brand {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 30rem;
+    text-align: center;
+    transition: 1s ease-in-out;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
 }
 
 .brand h1 {
@@ -80,25 +96,94 @@ nav {
     color: whitesmoke;
     -webkit-text-stroke-width: .5rem;
     -webkit-text-stroke-color: #88ddf0;
-    margin-bottom: 15rem;
- 
 }
 
 .play {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     padding: 1.5rem 5rem;
     font-size: 2rem;
     letter-spacing: .2rem;
     background-color: white;
     color: #88ddf0;
     border-color: #88ddf0;
-    border-width: 5px;
+    border-width: .5px;
 }
 
-.replay{
+.replay {
     opacity: 0;
-    color:  rgb(82, 179, 218);
+    color: rgb(82, 179, 218);
+}
+
+.modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Questrian', 'Montserrat', sans-serif;
+    z-index: 3;
+}
+
+.modal.open {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.modal-bg {
+    position: absolute;
+    background: rgba(82, 179, 218, 0.829);
+    width: 100%;
+    height: 100%;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #fff;
+    position: relative;
+    padding: 3rem 3rem 5rem 3rem;
+    max-width: 45rem;
+}
+
+.modal-container h1 {
+    font-size: 3rem;
+    color: #88ddf0;
+    padding: 2rem;
+}
+
+.modal-container p {
+    font-size: 1.1rem;
+}
+
+.modal-close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    outline: none;
+    appearance: none;
+    color: black;
+    background: none;
+    border: 0px;
+    font-weight: bold;
+    cursor: pointer;
+  
+}
+
+.game-controls, .game-instructions {
+    text-align: center;
+    line-height: 3rem;
+}
+
+.game-controls img{
+    width: 20rem;
+    height: auto
 }

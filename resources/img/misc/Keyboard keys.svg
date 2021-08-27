@@ -1,0 +1,83 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 252 135" width="504" height="270">
+	<title>Keyboard keys</title>
+	<defs>
+		<linearGradient id="grd1" gradientUnits="userSpaceOnUse"  x1="217" y1="53" x2="191" y2="27">
+			<stop offset="0" stop-color="#5d5d5d"  />
+			<stop offset="1" stop-color="#868686"  />
+		</linearGradient>
+		<linearGradient id="grd2" gradientUnits="userSpaceOnUse"  x1="204" y1="53" x2="204" y2="27">
+			<stop offset="0" stop-color="#474646"  />
+			<stop offset="1" stop-color="#6c6c6c"  />
+		</linearGradient>
+		<linearGradient id="grd3" gradientUnits="userSpaceOnUse"  x1="217" y1="81" x2="191" y2="55">
+			<stop offset="0" stop-color="#5d5d5d"  />
+			<stop offset="1" stop-color="#868686"  />
+		</linearGradient>
+		<linearGradient id="grd4" gradientUnits="userSpaceOnUse"  x1="204" y1="81" x2="204" y2="55">
+			<stop offset="0" stop-color="#474646"  />
+			<stop offset="1" stop-color="#6c6c6c"  />
+		</linearGradient>
+		<linearGradient id="grd5" gradientUnits="userSpaceOnUse"  x1="76.5" y1="81" x2="76.5" y2="55">
+			<stop offset="0" stop-color="#c0bfbd"  />
+			<stop offset="1" stop-color="#e9e7e6"  />
+		</linearGradient>
+		<linearGradient id="grd6" gradientUnits="userSpaceOnUse"  x1="76.5" y1="81" x2="76.5" y2="55">
+			<stop offset="0" stop-color="#838383"  />
+			<stop offset="1" stop-color="#cecece"  />
+		</linearGradient>
+		<linearGradient id="grd7" gradientUnits="userSpaceOnUse"  x1="248" y1="81" x2="222" y2="55">
+			<stop offset="0" stop-color="#c0bfbd"  />
+			<stop offset="1" stop-color="#e9e7e6"  />
+		</linearGradient>
+		<linearGradient id="grd8" gradientUnits="userSpaceOnUse"  x1="235" y1="81" x2="235" y2="55">
+			<stop offset="0" stop-color="#838383"  />
+			<stop offset="1" stop-color="#cecece"  />
+		</linearGradient>
+		<image  width="10" height="13" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAANBAMAAABiGeI2AAAAAXNSR0IB2cksfwAAADBQTFRFs7Ozs7Ozk5OTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg5m2EgAAABB0Uk5T/wAAANVC/6gb83UFQacaYuwegxcAAAAwSURBVHicY2BUNjY2ZnA1BpFpFWAyczWITEs5DCLTch+DyLT5cDZYHKKmAqEXbA4AUt4V0jaOWGkAAAAASUVORK5CYII="/>
+		<linearGradient id="grd9" gradientUnits="userSpaceOnUse"  x1="186" y1="81" x2="160" y2="55">
+			<stop offset="0" stop-color="#c0bfbd"  />
+			<stop offset="1" stop-color="#e9e7e6"  />
+		</linearGradient>
+		<linearGradient id="grd10" gradientUnits="userSpaceOnUse"  x1="173" y1="81" x2="173" y2="55">
+			<stop offset="0" stop-color="#838383"  />
+			<stop offset="1" stop-color="#cecece"  />
+		</linearGradient>
+		<image  width="10" height="13" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAANBAMAAABiGeI2AAAAAXNSR0IB2cksfwAAADBQTFRFAAAAk5OT////s7OzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlqt+dAAAABB0Uk5TAAAA/0LVG6j/BXXzQRqnYlFOKBoAAAAzSURBVHicY2BgYGBUZgABVxCR3gEkZu0AkjwRHR0MvC86gOTvjg44GyIOVQNVD9XLKAwAn4URcpFSC7oAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: url(#grd1);stroke: url(#grd2) } 
+		.shp1 { fill: #878686;stroke: #7e7e7e } 
+		.shp2 { fill: url(#grd3);stroke: url(#grd4) } 
+		.shp3 { fill: url(#grd5);stroke: url(#grd6) } 
+		.shp4 { fill: #f2f2f2;stroke: #f5f5f5 } 
+		.shp5 { fill: url(#grd7);stroke: url(#grd8) } 
+		.shp6 { fill: url(#grd9);stroke: url(#grd10) } 
+	</style>
+	<g id="Dark blank">
+		<path id="Sides" class="shp0" d="M193 27L215 27C216.66 27 218 30.34 218 32L218 50C218 51.66 216.66 53 215 53L193 53C191.34 53 190 51.66 190 50L190 32C190 30.34 191.34 27 193 27Z" />
+		<path id="Front" class="shp1" d="M196.49 26.99L212.11 26.99C213.73 26.99 215.04 28.3 215.04 29.92L215.04 43.59C215.04 45.21 213.73 46.52 212.11 46.52L196.49 46.52C194.87 46.52 193.56 45.21 193.56 43.59L193.56 29.92C193.56 28.3 194.87 26.99 196.49 26.99Z" />
+		<path id="Key" style="display: none" fill="#000000" aria-label="Q"  d="M178.32 99.49C178.11 99.49 177.91 99.42 177.76 99.25L177.46 98.94C178.07 98.05 178.42 96.94 178.42 95.75C178.42 92.77 176.26 90.36 173.29 90.36C170.31 90.36 168.17 92.77 168.17 95.75C168.17 98.73 170.31 101.14 173.29 101.14C174.52 101.14 175.63 100.72 176.48 100.02L176.72 100.27C177.17 100.73 177.62 101 178.21 101L178.71 101L178.71 99.49ZM173.29 99.61C171.14 99.61 169.68 97.92 169.68 95.75C169.68 93.58 171.14 91.89 173.29 91.89C175.46 91.89 176.89 93.58 176.89 95.75C176.89 96.52 176.71 97.22 176.39 97.82L174.9 96.28L173.89 97.3L175.43 98.93C174.86 99.36 174.13 99.61 173.29 99.61Z" />
+	</g>
+	<g id="Dark blank copy">
+		<path id="Sides" class="shp2" d="M193 55L215 55C216.66 55 218 58.34 218 60L218 78C218 79.66 216.66 81 215 81L193 81C191.34 81 190 79.66 190 78L190 60C190 58.34 191.34 55 193 55Z" />
+		<path id="Front" class="shp1" d="M196.49 54.99L212.11 54.99C213.73 54.99 215.04 56.3 215.04 57.92L215.04 71.59C215.04 73.21 213.73 74.52 212.11 74.52L196.49 74.52C194.87 74.52 193.56 73.21 193.56 71.59L193.56 57.92C193.56 56.3 194.87 54.99 196.49 54.99Z" />
+		<path id="Key" style="display: none" fill="#000000" aria-label="Q"  d="M209.32 68.49C209.11 68.49 208.91 68.42 208.76 68.25L208.46 67.94C209.07 67.05 209.42 65.94 209.42 64.75C209.42 61.77 207.26 59.36 204.29 59.36C201.31 59.36 199.17 61.77 199.17 64.75C199.17 67.73 201.31 70.14 204.29 70.14C205.52 70.14 206.63 69.72 207.48 69.02L207.72 69.27C208.17 69.73 208.62 70 209.21 70L209.71 70L209.71 68.49ZM204.29 68.61C202.14 68.61 200.68 66.92 200.68 64.75C200.68 62.58 202.14 60.89 204.29 60.89C206.46 60.89 207.89 62.58 207.89 64.75C207.89 65.52 207.71 66.22 207.39 66.82L205.9 65.28L204.89 66.3L206.43 67.93C205.86 68.36 205.13 68.61 204.29 68.61Z" />
+	</g>
+	<g id="Space">
+		<path id="Sides" class="shp3" d="M4 55L149 55C150.66 55 152 56.34 152 58L152 78C152 79.66 150.66 81 149 81L4 81C2.34 81 1 79.66 1 78L1 58C1 56.34 2.34 55 4 55Z" />
+		<path id="Front" class="shp4" d="M8 56L146 56C147.66 56 149 57.28 149 58.85L149 72.15C149 73.72 147.66 75 146 75L8 75C6.34 75 5 73.72 5 72.15L5 58.85C5 57.28 6.34 56 8 56Z" />
+	</g>
+	<g id="Arrow keys">
+		<g id="→">
+			<path id="Sides" class="shp5" d="M224 55L246 55C247.66 55 249 58.34 249 60L249 78C249 79.66 247.66 81 246 81L224 81C222.34 81 221 79.66 221 78L221 60C221 58.34 222.34 55 224 55Z" />
+			<path id="Front" class="shp4" d="M227.41 55.99L242.6 55.99C244.18 55.99 245.45 57.27 245.45 58.84L245.45 72.13C245.45 73.71 244.18 74.98 242.6 74.98L227.41 74.98C225.83 74.98 224.56 73.71 224.56 72.13L224.56 58.84C224.56 57.27 225.83 55.99 227.41 55.99Z" />
+			<use id="RIGHT" href="#img1" x="230" y="59" />
+		</g>
+		<g id="←">
+			<path id="Sides" class="shp6" d="M162 55L184 55C185.66 55 187 58.34 187 60L187 78C187 79.66 185.66 81 184 81L162 81C160.34 81 159 79.66 159 78L159 60C159 58.34 160.34 55 162 55Z" />
+			<path id="Front" class="shp4" d="M165.41 55.99L180.6 55.99C182.18 55.99 183.45 57.27 183.45 58.84L183.45 72.13C183.45 73.71 182.18 74.98 180.6 74.98L165.41 74.98C163.83 74.98 162.56 73.71 162.56 72.13L162.56 58.84C162.56 57.27 163.83 55.99 165.41 55.99Z" />
+			<use id="LEFT" href="#img2" x="168" y="59" />
+		</g>
+	</g>
+</svg>

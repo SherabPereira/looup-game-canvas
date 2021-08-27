@@ -19,10 +19,14 @@
         <button class="btn off" title="Music Off">
           <i class="fas fa-volume-mute"></i>
         </button>
-        <button class="btn on" title= "Music On">
+        <button class="btn on" title="Music On">
           <i class="fas fa-volume-up"></i>
         </button>
-        <button class="btn instructions" title="Instructions">
+        <button
+          class="btn instructions"
+          data-modal="modal-one"
+          title="Instructions"
+        >
           <i class="fas fa-question"></i>
         </button>
         <button class="btn replay" title="Play again">
@@ -34,6 +38,29 @@
     <div class="brand">
       <h1>LOOUP!</h1>
       <button class="btn play">Play</button>
+    </div>
+
+    <div class="modal" id="modal-one">
+      <div class="modal-bg modal-exit"></div>
+      <div class="modal-container">
+        <h1>Game instructions</h1>
+        <div class="game-instructions">
+          <p>
+            Jump from pad to pad and avoid enemies at all cost, the longer you
+            stay, the more points you get.
+          </p>
+          <p>Hint: If you can not go up, maybe try to go down.</p>
+        </div>
+        <h1>Game controls</h1>
+        <div class="game-controls">
+          <img src="./resources/img/misc/Keyboard keys.png" alt="" srcset="" />
+
+          <p>Use the left/right arrow keys to move horizontally</p>
+          <p>Press space bar to jump</p>
+        </div>
+
+        <button class="modal-close modal-exit">X</button>
+      </div>
     </div>
 
     <canvas id="score" width="900" height="900"></canvas>

@@ -1,3 +1,4 @@
+const modals = document.querySelectorAll("[data-modal]");
 const canvas = document.querySelector("#game-area");
 const ctx = canvas.getContext("2d");
 const scoreCtx = document.querySelector("#score").getContext("2d");
@@ -59,7 +60,7 @@ let playerAnimationStates = [];
 let enemiesArray = [];
 
 //Hits
-let hitsArray = [];
+const hit = new Hits(0, 0, 65, false);
 
 // Functions
 let prevPadX = 0;
@@ -150,7 +151,7 @@ function createEnemies() {
   }, 4800);
   enemiesTwoIntervalId = setInterval(() => {
     enemiesArray.push(new Ghost());
-  }, 9000);
+  }, 12000);
 }
 
 function keyDown(event) {
@@ -200,7 +201,12 @@ function checkInPlatform(padsArray, playerObj) {
 function checkEnemyCollisions(enemiesArray, playerObj) {
   enemiesArray.forEach((enemy) => {
     if (enemy.isColliding(playerObj)) {
-      hitsArray.push(new Hits(playerObj.x, playerObj.y, playerObj.width));
+      console.log("hit");
+      if (!hit.isTriggered) {
+        hit.x = player.x - 5;
+        hit.y = player.y + 5;
+        hit.isTriggered = true;
+      }
       isGameover = true;
     }
   });
@@ -217,8 +223,10 @@ function updateScore() {
 }
 
 function gameOver() {
-  player.y = CANVAS_HEIGTH;
-  player.x = CANVAS_WIDTH;
+  // player.y = CANVAS_HEIGTH;
+  // player.x = CANVAS_WIDTH;
+
+  padsArray = [];
   clearInterval(enemiesOneIntervalId);
   clearInterval(enemiesTwoIntervalId);
 
@@ -293,7 +301,7 @@ function animate() {
     platformDeleted = false;
   }
 
-  [...layersArray, ...padsArray, player, ...enemiesArray, ...hitsArray].forEach(
+  [...layersArray, ...padsArray, ...enemiesArray, hit, player].forEach(
     (object) => {
       object.draw();
       object.update();
@@ -349,5 +357,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.querySelector(".replay").addEventListener("click", () => {
     window.location.reload();
+  });
+});
+
+
+
+modals.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
+    const modal = document.getElementById(trigger.dataset.modal);
+    modal.classList.add("open");
+    const exits = modal.querySelectorAll(".modal-exit");
+    exits.forEach((exit) => {
+      exit.addEventListener("click", (event) => {
+        event.preventDefault();
+        modal.classList.remove("open");
+      });
+    });
   });
 });
