@@ -73,7 +73,7 @@ class Player {
     }
     if (this.vy < this.gravity) this.vy += this.weight;
   }
-  //ground
+ 
   stop() {
     gameSpeed = 0;
     this.vy = 0;

@@ -5,7 +5,7 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 15;
+let numberOfPads = 12;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
@@ -62,19 +62,18 @@ let enemiesArray = [];
 let hitsArray = [];
 
 // Functions
-let prevPadX = 0
+let prevPadX = 0;
 
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
   const gapBetweenPads = (CANVAS_HEIGTH + 60) / numberOfPads;
-  const availableSpace = CANVAS_WIDTH ;
+  const availableSpace = CANVAS_WIDTH;
 
   if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
       let x = Math.ceil(Math.random() * availableSpace);
 
-      
       let y = i * gapBetweenPads;
       padsArray.unshift(
         new Pad(
@@ -164,8 +163,8 @@ function keyDown(event) {
     player.moveRight();
   }
   if (event.key === " ") {
-    playJumpSound();
     isSpace = true;
+    playJumpSound();
   }
 }
 
@@ -222,8 +221,6 @@ function gameOver() {
   player.x = CANVAS_WIDTH;
   clearInterval(enemiesOneIntervalId);
   clearInterval(enemiesTwoIntervalId);
-
-  playerAnimationStates = [];
 
   drawGameOverScreen();
   restartGameButton();
@@ -320,8 +317,9 @@ function animate() {
 }
 
 function startGame() {
+  document.querySelector(".brand").style.display = 0;
   document.querySelector(".brand").style.opacity = 0;
-  document.querySelector(".brand").style.opacity = 0;
+  document.querySelector(".play").style.display = "none";
 
   createPads(true);
   createPlayerSpriteAnimations();
