@@ -31,7 +31,7 @@ nav {
     width: 900px;
     height: 900px;
     top: 50%;
-    left: 52%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
@@ -81,7 +81,7 @@ a.btn {
     flex-direction: column;
     height: 30rem;
     text-align: center;
-    transition: 1s ease-in-out;
+    transition: 1.5s ease-in-out;
     top: 0;
     left: 0;
     width: 100vw;

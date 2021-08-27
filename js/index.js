@@ -13,8 +13,8 @@ let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.4;
-const layer1SpeedModifier = 0.5;
+const padSpeedModifier = 1.5;
+const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
 
 let isLeft = false;
@@ -327,6 +327,10 @@ function startGame() {
   document.querySelector(".brand").style.opacity = 0;
   document.querySelector(".play").style.display = "none";
 
+  document.querySelectorAll("footer a").forEach((a) => {
+    a.style.display = "none";
+  });
+
   loadModal();
   createPads(true);
   createPlayerSpriteAnimations();
@@ -374,4 +378,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".replay").addEventListener("click", () => {
     window.location.reload();
   });
+
 });
