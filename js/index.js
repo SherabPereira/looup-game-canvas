@@ -6,14 +6,14 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 12;
+let numberOfPads = 17;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.6;
+const padSpeedModifier = 1.4;
 const layer1SpeedModifier = 0.5;
 const layer2SpeedModifier = 1;
 
