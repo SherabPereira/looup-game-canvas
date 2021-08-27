@@ -1,7 +1,7 @@
 class Hits {
   constructor(x, y, size) {
     this.image = new Image();
-    this.image.src = "../resources/img/misc/pow.png";
+    this.image.src = "https://origenz.github.io/looup-game-canvas/resources/img/misc/pow.png";
     this.spriteWidth = 200;
     this.spriteHeight = 178;
     this.spriteSheetLength = 5;
@@ -10,7 +10,7 @@ class Hits {
     this.size = size;
     this.frame = 0;
     this.sound = new Audio();
-    this.sound.src = "../resources/sound/hit.wav";
+    this.sound.src = "https://origenz.github.io/looup-game-canvas/resources/sound/hit.wav";
     this.markedToDelete = false;
   }
 

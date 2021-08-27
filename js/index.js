@@ -170,7 +170,7 @@ function keyDown(event) {
 function playJumpSound() {
   if (player.vy < 0.5) {
     const jumpSound = new Audio();
-    jumpSound.src = "../resources/sound/jump.mp3";
+    jumpSound.src = "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3";
     jumpSound.play();
   }
 }
