@@ -5,14 +5,14 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 9;
+let numberOfPads = 15;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.7;
+const padSpeedModifier = 1.6;
 const layer1SpeedModifier = 0.5;
 const layer2SpeedModifier = 1;
 
@@ -22,8 +22,6 @@ let isSpace = false;
 
 let enemiesOneIntervalId = null;
 let enemiesTwoIntervalId = null;
-
-//
 
 //Background Layers
 const backgroundLayer1 = new Image();
@@ -64,15 +62,19 @@ let enemiesArray = [];
 let hitsArray = [];
 
 // Functions
+let prevPadX = 0
+
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
-  const gapBetweenPads = (CANVAS_HEIGTH + 70) / numberOfPads;
-  const availableSpace = CANVAS_WIDTH - padWidth;
+  const gapBetweenPads = (CANVAS_HEIGTH + 60) / numberOfPads;
+  const availableSpace = CANVAS_WIDTH ;
 
   if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
-      let x = Math.round(Math.random() * availableSpace);
+      let x = Math.ceil(Math.random() * availableSpace);
+
+      
       let y = i * gapBetweenPads;
       padsArray.unshift(
         new Pad(
@@ -87,7 +89,7 @@ function createPads(isMultiplePads) {
     }
   } else {
     let x = Math.ceil(Math.random() * availableSpace);
-    let y = gapBetweenPads;
+    let y = gapBetweenPads - 15;
     padsArray.push(
       new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
     );
@@ -149,7 +151,7 @@ function createEnemies() {
   }, 4800);
   enemiesTwoIntervalId = setInterval(() => {
     enemiesArray.push(new Ghost());
-  }, 7000);
+  }, 9000);
 }
 
 function keyDown(event) {
@@ -167,18 +169,19 @@ function keyDown(event) {
   }
 }
 
-function playJumpSound() {
-  if (player.vy < 0.5) {
-    const jumpSound = new Audio();
-    jumpSound.src = "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3";
-    jumpSound.play();
-  }
-}
-
 function keyUp(event) {
   if (event.key === " ") isSpace = false;
   if (event.key === "ArrowLeft") isLeft = false;
   if (event.key === "ArrowRight") isRight = false;
+}
+
+function playJumpSound() {
+  if (player.vy < 0.5) {
+    const jumpSound = new Audio();
+    jumpSound.src =
+      "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3";
+    jumpSound.play();
+  }
 }
 
 function checkInPlatform(padsArray, playerObj) {
@@ -200,10 +203,6 @@ function checkEnemyCollisions(enemiesArray, playerObj) {
     if (enemy.isColliding(playerObj)) {
       hitsArray.push(new Hits(playerObj.x, playerObj.y, playerObj.width));
       isGameover = true;
-      player.y = CANVAS_HEIGTH;
-      player.x = CANVAS_WIDTH;
-      clearInterval(enemiesOneIntervalId);
-      clearInterval(enemiesTwoIntervalId);
     }
   });
 }
@@ -219,6 +218,18 @@ function updateScore() {
 }
 
 function gameOver() {
+  player.y = CANVAS_HEIGTH;
+  player.x = CANVAS_WIDTH;
+  clearInterval(enemiesOneIntervalId);
+  clearInterval(enemiesTwoIntervalId);
+
+  playerAnimationStates = [];
+
+  drawGameOverScreen();
+  restartGameButton();
+}
+
+function drawGameOverScreen() {
   canvas.style.zIndex = "1";
 
   ctx.fillStyle = "#52b3da";
@@ -241,8 +252,6 @@ function gameOver() {
 
   ctx.fillText(`${score}`, CANVAS_WIDTH / 2, 600);
   ctx.strokeText(`${score}`, CANVAS_WIDTH / 2, 600);
-
-  ctx.textAlign = "start";
 }
 
 function sound(src) {
@@ -304,15 +313,32 @@ function animate() {
   });
 
   if (!isGameover) updateScore();
+  // _
   gameFrame++;
 
   requestAnimationFrame(animate);
 }
 
+function startGame() {
+  document.querySelector(".brand").style.opacity = 0;
+  document.querySelector(".brand").style.opacity = 0;
+
+  createPads(true);
+  createPlayerSpriteAnimations();
+  createPlayer();
+  createEnemies();
+  animate();
+  // gameTheme.play();
+}
+
+function restartGameButton() {
+  document.querySelector(".replay").style.opacity = 1;
+  document.querySelector(".replay").style.backgroundColor = "white";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
-
   document
     .querySelector(".on")
     .addEventListener("click", () => gameTheme.play());
@@ -320,9 +346,10 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelector(".off")
     .addEventListener("click", () => gameTheme.pause());
 
-  createPads(true);
-  createPlayerSpriteAnimations();
-  createPlayer();
-  createEnemies();
-  animate();
+  document.querySelector(".play").addEventListener("click", () => {
+    startGame();
+  });
+  document.querySelector(".replay").addEventListener("click", () => {
+    window.location.reload();
+  });
 });

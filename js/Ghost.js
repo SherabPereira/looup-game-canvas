@@ -1,12 +1,13 @@
 class Ghost {
   constructor() {
     this.image = new Image();
-    this.image.src = "https://origenz.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png";
+    this.image.src =
+      "https://origenz.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png";
     this.speed = Math.random() * 3 + 1;
     this.spriteWidth = 160;
     this.spriteHeight = 237.5;
-    this.width = this.spriteWidth / 4;
-    this.height = this.spriteHeight / 4;
+    this.width = this.spriteWidth / 3.5;
+    this.height = this.spriteHeight / 3.5;
     this.x = Math.random() * (canvas.width - this.width);
     this.y = -this.height;
     this.newX = (Math.random() * canvas.width) / 2;
@@ -30,8 +31,8 @@ class Ghost {
     if (this.y + this.height > CANVAS_WIDTH) this.markedToDelete = true;
 
     if (gameFrame % this.interval === 0) {
-      this.newX = Math.random() * (canvas.width - this.width)  / 2;
-      this.newY = Math.random() * (canvas.height - this.height) ;
+      this.newX = Math.random() * (canvas.width - this.width);
+      this.newY = Math.random() * (canvas.height - this.height);
     }
 
     let dx = this.x - this.newX;

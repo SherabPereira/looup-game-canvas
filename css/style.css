@@ -3,10 +3,17 @@
     src: url('../resources/fonts/questrian/Questrian.otf');
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     height: 100vh;
     margin: 0;
     background: rgb(82, 179, 218);
+    font-size: 10px;
 }
 
 nav {
@@ -19,40 +26,31 @@ nav {
     flex-direction: column;
 }
 
-#game-area {
+#game-area, #score {
     position: absolute;
     width: 900px;
     height: 900px;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#score {
-    position: absolute;
-    width: 900px;
-    height: 900px;
-    top: 50%;
-    left: 50%;
+    left: 52%;
     transform: translate(-50%, -50%);
 }
 
 .btn {
-    z-index: 1;
+    z-index: 2;
     box-sizing: border-box;
     appearance: none;
     background-color: transparent;
     border: 2px solid whitesmoke;
-    border-radius: 0.6em;
+    border-radius: 0.6rem;
     color: whitesmoke;
     cursor: pointer;
     display: flex;
     align-self: center;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     line-height: 1;
-    margin: 20px;
-    padding: 1.2em 2.8em;
+    margin: 1.5rem;
+    padding: 1.3rem 2.6rem;
     text-decoration: none;
     text-align: center;
     text-transform: uppercase;
@@ -67,9 +65,40 @@ nav {
     outline: 0;
 }
 
+.brand {
+    position: relative;
+    margin: 0 auto;
+    margin-top: -10rem;
+    height: 30rem;
+    text-align: center;
+    transition: 1s ease-in-out;
+}
+
+.brand h1 {
+    font-family: 'Questrian', 'Montserrat', sans-serif;
+    font-size: 13rem;
+    color: whitesmoke;
+    -webkit-text-stroke-width: .5rem;
+    -webkit-text-stroke-color: #88ddf0;
+    margin-bottom: 15rem;
+ 
+}
+
 .play {
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 1.5rem 5rem;
+    font-size: 2rem;
+    letter-spacing: .2rem;
+    background-color: white;
+    color: #88ddf0;
+    border-color: #88ddf0;
+    border-width: 5px;
+}
+
+.replay{
+    opacity: 0;
+    color:  rgb(82, 179, 218);
 }

@@ -12,14 +12,12 @@ class Player {
     this.y = y;
     this.vx = 0;
     this.vy = 0;
-    this.gravity = 10;
+    this.gravity = 15;
     this.weight = 0.2;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;
     this.frameY = 0;
-    this.rightTimerId = null;
-    this.leftTimerId = null;
     this.alive = true;
 
   }
@@ -75,7 +73,7 @@ class Player {
     }
     if (this.vy < this.gravity) this.vy += this.weight;
   }
-
+  //ground
   stop() {
     gameSpeed = 0;
     this.vy = 0;
@@ -93,7 +91,6 @@ class Player {
     ) {
       return false;
     }
-
     return true;
   }
 
@@ -120,8 +117,9 @@ class Player {
     this.framePosition =
       Math.floor(this.frame / 6) % spriteAnimations[this.state].loc.length;
 
-    this.frame++;
     this.frameX = this.spriteWidth * this.framePosition;
     this.frameY = spriteAnimations[this.state].loc[this.framePosition].y;
+
+    this.frame++;
   }
 }

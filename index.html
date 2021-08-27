@@ -16,19 +16,25 @@
   <body>
     <nav>
       <div class="nav-wrapper">
-        <button class="btn off">
+        <button class="btn off" title="Music Off">
           <i class="fas fa-volume-mute"></i>
         </button>
-        <button class="btn on">
+        <button class="btn on" title= "Music On">
           <i class="fas fa-volume-up"></i>
         </button>
-        <button class="btn instructions">
+        <button class="btn instructions" title="Instructions">
           <i class="fas fa-question"></i>
+        </button>
+        <button class="btn replay" title="Play again">
+          <i class="fas fa-redo-alt"></i>
         </button>
       </div>
     </nav>
     <canvas id="game-area"> </canvas>
-    <!-- <button class="btn play">Play</button> -->
+    <div class="brand">
+      <h1>LOOUP!</h1>
+      <button class="btn play">Play</button>
+    </div>
 
     <canvas id="score" width="900" height="900"></canvas>
     <script src="./js/Pad.js"></script>
