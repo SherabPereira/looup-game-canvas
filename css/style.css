@@ -65,15 +65,13 @@ nav {
     outline: 0;
 }
 
-/* .brand {
-    position: relative;
-    margin: 0 auto;
-    margin-top: -10rem;
-    height: 30rem;
-    text-align: center;
-    transition: 1s ease-in-out;
+a.btn {
+    display: inline-block;
+    border-radius: 5rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    margin: 1rem;
 }
- */
 
 .brand {
     position: absolute;
@@ -185,4 +183,15 @@ nav {
 .game-controls img {
     width: 20rem;
     height: auto
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    padding: 1rem;
 }

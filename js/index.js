@@ -264,6 +264,7 @@ function sound(src) {
   this.sound.style.display = "none";
   this.sound.loop = true;
   this.sound.muted = true;
+  this.sound.volume = 0.4;
   document.body.appendChild(this.sound);
 
   this.play = function () {
@@ -326,6 +327,7 @@ function startGame() {
   document.querySelector(".brand").style.opacity = 0;
   document.querySelector(".play").style.display = "none";
 
+  loadModal();
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
@@ -337,6 +339,23 @@ function startGame() {
 function restartGameButton() {
   document.querySelector(".replay").style.opacity = 1;
   document.querySelector(".replay").style.backgroundColor = "white";
+}
+
+function loadModal() {
+  modals.forEach((trigger) => {
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      const modal = document.getElementById(trigger.dataset.modal);
+      modal.classList.add("open");
+      const exits = modal.querySelectorAll(".modal-exit");
+      exits.forEach((exit) => {
+        exit.addEventListener("click", (event) => {
+          event.preventDefault();
+          modal.classList.remove("open");
+        });
+      });
+    });
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -354,22 +373,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.querySelector(".replay").addEventListener("click", () => {
     window.location.reload();
-  });
-});
-
-
-
-modals.forEach((trigger) => {
-  trigger.addEventListener("click", (event) => {
-    event.preventDefault();
-    const modal = document.getElementById(trigger.dataset.modal);
-    modal.classList.add("open");
-    const exits = modal.querySelectorAll(".modal-exit");
-    exits.forEach((exit) => {
-      exit.addEventListener("click", (event) => {
-        event.preventDefault();
-        modal.classList.remove("open");
-      });
-    });
   });
 });
