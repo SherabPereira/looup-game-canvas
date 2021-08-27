@@ -1,9 +1,8 @@
 const canvas = document.querySelector("#game-area");
 const ctx = canvas.getContext("2d");
+const scoreCtx = document.querySelector("#score").getContext("2d");
 const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
-
-const scoreCtx = document.querySelector("#score").getContext("2d");
 
 let gameSpeed = 0;
 let numberOfPads = 9;
@@ -28,9 +27,9 @@ let enemiesTwoIntervalId = null;
 
 //Background Layers
 const backgroundLayer1 = new Image();
-
 backgroundLayer1.src =
   "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/background.png";
+
 const backgroundLayer2 = new Image();
 backgroundLayer2.src =
   "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/cloud-group.png";
@@ -41,9 +40,6 @@ const layersArray = [
 ];
 
 // Sound and SFX
-
-// const jumSound = new sound("bounce.mp3");
-// const collisionSound = new sound("gametheme.mp3");
 const gameTheme = new sound(
   "https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.mp3"
 );
@@ -61,11 +57,11 @@ const playerSpriteHeight = 164;
 const spriteAnimations = [];
 let playerAnimationStates = [];
 
-//Characters
-let charactersArray = [];
-
 //Enemies
 let enemiesArray = [];
+
+//Hits
+let hitsArray = [];
 
 // Functions
 function createPads(isMultiplePads) {
@@ -100,10 +96,9 @@ function createPads(isMultiplePads) {
 
 function createPlayer() {
   if (padsArray.length !== 0 && padsArray !== null) {
-    const x = padsArray[0].x + 45; // hardcoded + 32
-    const y = padsArray[0].y - 52; //hardcoded - 69
+    const x = padsArray[0].x + 45; // hardcoded
+    const y = padsArray[0].y - 52; //hardcoded
     player = new Player(x, y, playerSpriteWidth, playerSpriteHeight);
-    charactersArray.push(player);
   }
 }
 
@@ -166,7 +161,18 @@ function keyDown(event) {
     isRight = true;
     player.moveRight();
   }
-  if (event.key === " ") isSpace = true;
+  if (event.key === " ") {
+    playJumpSound();
+    isSpace = true;
+  }
+}
+
+function playJumpSound() {
+  if (player.vy < 0.5) {
+    const jumpSound = new Audio();
+    jumpSound.src = "../resources/sound/jump.mp3";
+    jumpSound.play();
+  }
 }
 
 function keyUp(event) {
@@ -192,10 +198,10 @@ function checkInPlatform(padsArray, playerObj) {
 function checkEnemyCollisions(enemiesArray, playerObj) {
   enemiesArray.forEach((enemy) => {
     if (enemy.isColliding(playerObj)) {
+      hitsArray.push(new Hits(playerObj.x, playerObj.y, playerObj.width));
       isGameover = true;
-      player.width = 0;
-      player.height = 0;
-      player.y = CANVAS_WIDTH;
+      player.y = CANVAS_HEIGTH;
+      player.x = CANVAS_WIDTH;
       clearInterval(enemiesOneIntervalId);
       clearInterval(enemiesTwoIntervalId);
     }
@@ -242,22 +248,23 @@ function gameOver() {
 function sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("muted", "true");
-  this.sound.setAttribute("controls", "none");
+  this.sound.preload = "auto";
+  this.sound.controls = "none";
   this.sound.style.display = "none";
+  this.sound.loop = true;
+  this.sound.muted = true;
   document.body.appendChild(this.sound);
 
   this.play = function () {
-    this.sound.setAttribute("muted", "false");
     this.sound.play();
+    this.sound.muted = false;
   };
   this.pause = function () {
     this.sound.pause();
   };
   this.stop = function () {
-    this.pause();
-    this.currentTime = 0;
+    this.sound.pause();
+    this.sound.currentTime = 0;
   };
 }
 
@@ -271,15 +278,16 @@ function animate() {
     upFrames++;
     score += Math.ceil((upFrames % 2) / 2);
   }
+
+  checkEnemyCollisions(enemiesArray, player);
+  checkInPlatform(padsArray, player);
+
   if (platformDeleted) {
     createPads(false);
     platformDeleted = false;
   }
 
-  checkEnemyCollisions(enemiesArray, player);
-  checkInPlatform(padsArray, player);
-
-  [...layersArray, ...padsArray, ...charactersArray, ...enemiesArray].forEach(
+  [...layersArray, ...padsArray, player, ...enemiesArray, ...hitsArray].forEach(
     (object) => {
       object.draw();
       object.update();
@@ -292,7 +300,6 @@ function animate() {
   });
 
   enemiesArray = enemiesArray.filter((enemy) => {
-    if (enemy.markedToDelete) console.log("deleted");
     return !enemy.markedToDelete;
   });
 
@@ -311,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", () => gameTheme.play());
   document
     .querySelector(".off")
-    .addEventListener("click", () => gameTheme.stop());
+    .addEventListener("click", () => gameTheme.pause());
 
   createPads(true);
   createPlayerSpriteAnimations();

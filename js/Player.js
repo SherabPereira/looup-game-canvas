@@ -21,6 +21,7 @@ class Player {
     this.rightTimerId = null;
     this.leftTimerId = null;
     this.alive = true;
+
   }
 
   moveLeft() {
@@ -63,6 +64,7 @@ class Player {
     if (isSpace && this.vy === 0) {
       if (this.state == "moveLeft") this.state = "jumpLeft";
       if (this.state == "moveRight") this.state = "jumpRight";
+
       this.vy = -7.5;
     }
     if (!isSpace && this.vy !== 0) {

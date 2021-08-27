@@ -12,7 +12,6 @@ class Ghost {
     this.newX = (Math.random() * canvas.width) / 2;
     this.newY = (Math.random() * canvas.height) / 2;
     this.frame = 0;
-    this.spriteChangeSpeed = Math.floor(Math.random() * 2 + 1);
     this.interval = Math.floor(Math.random() * 250 + 250);
   }
   isColliding(obj) {
@@ -31,8 +30,8 @@ class Ghost {
     if (this.y + this.height > CANVAS_WIDTH) this.markedToDelete = true;
 
     if (gameFrame % this.interval === 0) {
-      this.newX = Math.random() * (canvas.width - this.width);
-      this.newY = Math.random() * (canvas.height - this.height);
+      this.newX = Math.random() * (canvas.width - this.width)  / 2;
+      this.newY = Math.random() * (canvas.height - this.height) ;
     }
 
     let dx = this.x - this.newX;

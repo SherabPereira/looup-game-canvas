@@ -67,11 +67,6 @@ nav {
     outline: 0;
 }
 
-/* .btn:hover+i, .btn:focus+ii {
-    box-shadow: 0 0 40px 40px #52b3da inset;
-    color: #52b3da;
-} */
-
 .play {
     position: absolute;
     top: 50%;

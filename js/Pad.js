@@ -20,7 +20,6 @@ class Pad {
 
     if (this.y >= CANVAS_HEIGTH + this.height) {
       this.markedToDelete = true;
-      console.log("deleted");
     }
   }
 }
