@@ -16,7 +16,7 @@ class Player {
     this.vx = 0;
     this.vy = 0;
     this.gravity = 15;
-    this.weight = 0.18;
+    this.weight = 0.19;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;

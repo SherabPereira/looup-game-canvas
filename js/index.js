@@ -6,14 +6,14 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 15;
+let numberOfPads = 11;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.6;
+const padSpeedModifier = 1.7;
 const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
 
@@ -204,10 +204,9 @@ function updateScore() {
 }
 
 function gameOver() {
-  padsArray = [];
   clearInterval(enemiesOneIntervalId);
   clearInterval(enemiesTwoIntervalId);
-
+  padsArray = [];
   drawGameOverScreen();
   restartGameButton();
 }
@@ -326,7 +325,7 @@ function restartGameButton() {
   document.querySelector(".replay").style.backgroundColor = "white";
 }
 
-function loadModal() {
+function loadModals() {
   modals.forEach((trigger) => {
     trigger.addEventListener("click", (event) => {
       event.preventDefault();
@@ -359,7 +358,7 @@ function toogleSoundButton() {
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
-  loadModal();
+  loadModals();
   document
     .querySelector("#on")
     .addEventListener("click", () => gameTheme.play());
