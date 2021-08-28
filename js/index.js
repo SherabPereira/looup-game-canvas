@@ -68,7 +68,7 @@ let prevPadX = 0;
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
-  const gapBetweenPads = (CANVAS_HEIGTH) / numberOfPads;
+  const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
   const availableSpace = CANVAS_WIDTH;
 
   if (isMultiplePads) {
@@ -181,7 +181,7 @@ function checkInPlatform(padsArray, playerObj) {
     ) {
       player.y = pad.y - player.height;
       playerObj.stop();
-       gameSpeed = 0;
+      gameSpeed = 0;
     }
   }
 }
@@ -189,7 +189,6 @@ function checkInPlatform(padsArray, playerObj) {
 function checkEnemyCollisions(enemiesArray, playerObj) {
   enemiesArray.forEach((enemy) => {
     if (enemy.isColliding(playerObj)) {
-    
       if (!hit.isTriggered) {
         hit.x = player.x - 5;
         hit.y = player.y + 5;
@@ -322,7 +321,7 @@ function startGame() {
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
-  // createEnemies();
+  createEnemies();
   animate();
   gameTheme.play();
 }
