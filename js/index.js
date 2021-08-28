@@ -6,7 +6,7 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 16;
+let numberOfPads = 15;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
@@ -40,7 +40,7 @@ const layersArray = [
 
 // Sound and SFX
 const gameTheme = new sound(
-  "https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.mp3"
+  "https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.ogg"
 );
 
 // Pads

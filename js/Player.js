@@ -62,7 +62,7 @@ class Player {
 
     if (isSpace && this.vy === 0) {
       this.jumpSound.play();
-      this.jumpSound.currentTime = 0.005;
+      this.jumpSound.currentTime = 0.004;
       if (this.state == "moveLeft") this.state = "jumpLeft";
       if (this.state == "moveRight") this.state = "jumpRight";
 
