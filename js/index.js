@@ -6,14 +6,14 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 17;
+let numberOfPads = 16;
 let platformDeleted = false;
 let isGameover = false;
 let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.4;
+const padSpeedModifier = 1.5;
 const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
 
@@ -68,14 +68,13 @@ let prevPadX = 0;
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
-  const gapBetweenPads = (CANVAS_HEIGTH + 60) / numberOfPads;
+  const gapBetweenPads = (CANVAS_HEIGTH) / numberOfPads;
   const availableSpace = CANVAS_WIDTH;
 
   if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
       let x = Math.ceil(Math.random() * availableSpace);
-
-      let y = i * gapBetweenPads;
+      let y = i * (gapBetweenPads + 5);
       padsArray.unshift(
         new Pad(
           padImg1,
@@ -89,7 +88,7 @@ function createPads(isMultiplePads) {
     }
   } else {
     let x = Math.ceil(Math.random() * availableSpace);
-    let y = gapBetweenPads - 15;
+    let y = gapBetweenPads;
     padsArray.push(
       new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
     );
@@ -155,17 +154,14 @@ function createEnemies() {
 }
 
 function keyDown(event) {
-  if (event.key === "ArrowLeft") {
-    isLeft = true;
-    player.moveLeft();
-  }
-  if (event.key === "ArrowRight") {
-    isRight = true;
-    player.moveRight();
-  }
   if (event.key === " ") {
     isSpace = true;
-    playJumpSound();
+  } else if (event.key === "ArrowLeft") {
+    isLeft = true;
+    player.moveLeft();
+  } else if (event.key === "ArrowRight") {
+    isRight = true;
+    player.moveRight();
   }
 }
 
@@ -173,15 +169,6 @@ function keyUp(event) {
   if (event.key === " ") isSpace = false;
   if (event.key === "ArrowLeft") isLeft = false;
   if (event.key === "ArrowRight") isRight = false;
-}
-
-function playJumpSound() {
-  if (player.vy < 0.5) {
-    const jumpSound = new Audio();
-    jumpSound.src =
-      "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3";
-    jumpSound.play();
-  }
 }
 
 function checkInPlatform(padsArray, playerObj) {
@@ -194,6 +181,7 @@ function checkInPlatform(padsArray, playerObj) {
     ) {
       player.y = pad.y - player.height;
       playerObj.stop();
+       gameSpeed = 0;
     }
   }
 }
@@ -201,7 +189,7 @@ function checkInPlatform(padsArray, playerObj) {
 function checkEnemyCollisions(enemiesArray, playerObj) {
   enemiesArray.forEach((enemy) => {
     if (enemy.isColliding(playerObj)) {
-      console.log("hit");
+    
       if (!hit.isTriggered) {
         hit.x = player.x - 5;
         hit.y = player.y + 5;
@@ -334,7 +322,7 @@ function startGame() {
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
-  createEnemies();
+  // createEnemies();
   animate();
   gameTheme.play();
 }

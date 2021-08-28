@@ -4,6 +4,9 @@ class Player {
     this.image = new Image();
     this.image.src =
       "https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png";
+    this.jumpSound = new Audio();
+    this.jumpSound.src =
+      "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3";
     this.spriteWidth = spriteWidth;
     this.spriteHeight = spriteHeight;
     this.width = this.spriteWidth / 2.78;
@@ -13,13 +16,11 @@ class Player {
     this.vx = 0;
     this.vy = 0;
     this.gravity = 15;
-    this.weight = 0.2;
+    this.weight = 0.18;
     this.frame = 0;
     this.framePosition = 0;
     this.frameX = 0;
     this.frameY = 0;
-    this.alive = true;
-
   }
 
   moveLeft() {
@@ -55,11 +56,13 @@ class Player {
   }
 
   jumpFall() {
-    gameSpeed -= this.vy / 53;
+    gameSpeed -= this.vy / 60;
 
     if (!isLeft && !isRight) this.vx = 0;
 
     if (isSpace && this.vy === 0) {
+      this.jumpSound.play();
+      this.jumpSound.currentTime = 0.005;
       if (this.state == "moveLeft") this.state = "jumpLeft";
       if (this.state == "moveRight") this.state = "jumpRight";
 
@@ -73,9 +76,8 @@ class Player {
     }
     if (this.vy < this.gravity) this.vy += this.weight;
   }
- 
+
   stop() {
-    gameSpeed = 0;
     this.vy = 0;
 
     if (this.state === "fallRight") this.state = "moveRight";

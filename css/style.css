@@ -75,17 +75,16 @@ a.btn {
 
 .brand {
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 30rem;
-    text-align: center;
-    transition: 1.5s ease-in-out;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    transition: 1.5s ease-in-out;
 }
 
 .brand h1 {
@@ -113,16 +112,16 @@ a.btn {
 
 .modal {
     position: fixed;
-    width: 100vw;
-    height: 100vh;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
     top: 0;
     left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
     font-family: 'Questrian', 'Montserrat', sans-serif;
     z-index: 3;
 }
