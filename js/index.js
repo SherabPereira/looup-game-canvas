@@ -13,7 +13,7 @@ let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.5;
+const padSpeedModifier = 1.6;
 const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
 
@@ -74,39 +74,17 @@ function createPads(isMultiplePads) {
   let y;
   let xPos;
 
-  if (isMultiplePads) {
-    for (let i = 0; i < numberOfPads; i++) {
-      // xPos = Math.ceil(Math.random() * 2);
-      // xPos === 1
-      //   ? (x = Math.random() * middleGround)
-      //   : (x = Math.random() * middleGround + middleGround - padWidth);
-      // y = i * (gapBetweenPads + 5);
-      // padsArray.unshift(
-      //   new Pad(padImg1,x,y - padHeight,padWidth,padHeight,padSpeedModifier)
-      // );
-      newPad(i)
-    }
-  } else {
-    newPad(1)
-    // xPos = Math.ceil(Math.random() * 2);
-    // xPos === 1
-    //   ? (x = Math.random() * middleGround)
-    //   : (x = Math.random() * middleGround + middleGround - padWidth);
-    // y = gapBetweenPads;
-    // padsArray.push(
-    //   new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
-    // );
-  }
+  if (isMultiplePads) for (let i = 0; i < numberOfPads; i++) newPad(i);
+  else newPad(1);
 
-
-  function newPad (padNum){
+  function newPad(padNum) {
     xPos = Math.ceil(Math.random() * 2);
     xPos === 1
       ? (x = Math.random() * middleGround)
       : (x = Math.random() * middleGround + middleGround - padWidth);
     y = padNum * (gapBetweenPads + 5);
     padsArray.unshift(
-      new Pad(padImg1,x,y - padHeight,padWidth,padHeight,padSpeedModifier)
+      new Pad(padImg1, x, y - padHeight, padWidth, padHeight, padSpeedModifier)
     );
   }
 }
