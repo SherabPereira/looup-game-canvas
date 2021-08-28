@@ -63,13 +63,11 @@ let enemiesArray = [];
 const hit = new Hits(0, 0, 65, false);
 
 // Functions
-let prevPadX = 0;
 
 function createPads(isMultiplePads) {
   const padWidth = 150;
   const padHeight = 50;
   const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
-  const availableSpace = CANVAS_WIDTH;
   const middleGround = CANVAS_WIDTH / 2;
 
   let x;
@@ -78,30 +76,37 @@ function createPads(isMultiplePads) {
 
   if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
-      xPos = Math.ceil(Math.random() * 2);
-      xPos === 1
-        ? (x = Math.random() * middleGround)
-        : (x = Math.random() * middleGround + middleGround - padWidth);
-      y = i * (gapBetweenPads + 5);
-      padsArray.unshift(
-        new Pad(
-          padImg1,
-          x,
-          y - padHeight,
-          padWidth,
-          padHeight,
-          padSpeedModifier
-        )
-      );
+      // xPos = Math.ceil(Math.random() * 2);
+      // xPos === 1
+      //   ? (x = Math.random() * middleGround)
+      //   : (x = Math.random() * middleGround + middleGround - padWidth);
+      // y = i * (gapBetweenPads + 5);
+      // padsArray.unshift(
+      //   new Pad(padImg1,x,y - padHeight,padWidth,padHeight,padSpeedModifier)
+      // );
+      newPad(i)
     }
   } else {
+    newPad(1)
+    // xPos = Math.ceil(Math.random() * 2);
+    // xPos === 1
+    //   ? (x = Math.random() * middleGround)
+    //   : (x = Math.random() * middleGround + middleGround - padWidth);
+    // y = gapBetweenPads;
+    // padsArray.push(
+    //   new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
+    // );
+  }
+
+
+  function newPad (padNum){
     xPos = Math.ceil(Math.random() * 2);
     xPos === 1
       ? (x = Math.random() * middleGround)
       : (x = Math.random() * middleGround + middleGround - padWidth);
-    y = gapBetweenPads;
-    padsArray.push(
-      new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
+    y = padNum * (gapBetweenPads + 5);
+    padsArray.unshift(
+      new Pad(padImg1,x,y - padHeight,padWidth,padHeight,padSpeedModifier)
     );
   }
 }
