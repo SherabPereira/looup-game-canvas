@@ -16,14 +16,17 @@ body {
     font-size: 10px;
 }
 
-nav {
+header {
+    position: relative;
+    z-index: 2;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between
 }
 
 .nav-wrapper {
     display: flex;
     flex-direction: column;
+    margin-top: 1rem;
 }
 
 #game-area, #score {
@@ -36,23 +39,18 @@ nav {
 }
 
 .btn {
-    z-index: 2;
-    box-sizing: border-box;
-    appearance: none;
+    justify-content: center;
     background-color: transparent;
     border: 2px solid whitesmoke;
-    border-radius: 0.6rem;
+    border-radius: 0.9rem;
     color: whitesmoke;
     cursor: pointer;
-    display: flex;
     align-self: center;
     font-size: 1.1rem;
     font-weight: 400;
     line-height: 1;
-    margin: 1.5rem;
+    margin: .5rem 1.5rem;
     padding: 1.3rem 2.6rem;
-    text-decoration: none;
-    text-align: center;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -63,6 +61,52 @@ nav {
     box-shadow: 0 0 40px 40px white inset;
     color: #52b3da;
     outline: 0;
+}
+
+#on {
+    font-size: 1rem;
+}
+
+#off {
+    padding: 1.25rem 2.6rem;
+}
+
+.instructions {
+    font-size: 1.2rem;
+    padding: 1.1845rem 2.713rem;
+}
+
+.play {
+    padding: 1.5rem 5rem;
+    font-size: 2rem;
+    letter-spacing: .2rem;
+    background-color: white;
+    color: #88ddf0;
+    border-color: #88ddf0;
+    border-width: .5px;
+}
+
+.replay {
+    opacity: 0;
+    color: rgb(82, 179, 218);
+    padding: 1.25rem 2.612rem;
+}
+
+.attributions {
+    align-self: flex-start;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+.attributions:hover {
+    font-size: 2.5rem;
+    color: #f4ca15;
+    transform: translateX(-0.25rem) translateY(-0.25rem);
 }
 
 a.btn {
@@ -93,21 +137,6 @@ a.btn {
     color: whitesmoke;
     -webkit-text-stroke-width: .5rem;
     -webkit-text-stroke-color: #88ddf0;
-}
-
-.play {
-    padding: 1.5rem 5rem;
-    font-size: 2rem;
-    letter-spacing: .2rem;
-    background-color: white;
-    color: #88ddf0;
-    border-color: #88ddf0;
-    border-width: .5px;
-}
-
-.replay {
-    opacity: 0;
-    color: rgb(82, 179, 218);
 }
 
 .modal {
@@ -161,10 +190,10 @@ a.btn {
     font-size: 1.1rem;
 }
 
-.modal-close {
+.modal-exit {
     position: absolute;
     right: 1.5rem;
-    top: 1.5rem;
+    top: 1.2rem;
     outline: none;
     appearance: none;
     color: black;
@@ -172,6 +201,12 @@ a.btn {
     border: 0px;
     font-weight: bold;
     cursor: pointer;
+    font-size: 1.5rem;
+    transition: .1s;
+}
+
+.modal-exit:hover {
+    color: #88ddf0;
 }
 
 .game-controls, .game-instructions {

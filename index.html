@@ -14,33 +14,43 @@
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <nav>
-      <div class="nav-wrapper">
-        <button class="btn off" title="Music Off">
-          <i class="fas fa-volume-mute"></i>
-        </button>
-        <button class="btn on" title="Music On">
-          <i class="fas fa-volume-up"></i>
-        </button>
-        <button
-          class="btn instructions"
-          data-modal="modal-one"
-          title="Instructions"
-        >
-          <i class="fas fa-question"></i>
-        </button>
-        <button class="btn replay" title="Play again">
-          <i class="fas fa-redo-alt"></i>
-        </button>
-      </div>
-    </nav>
+    <header>
+      <button
+        class="attributions"
+        title="Attributions"
+        data-modal="attributions"
+      >
+        <i class="fas fa-star"></i>
+      </button>
+      <nav>
+        <div class="nav-wrapper">
+          <button class="btn music" id="off" title="Music Off">
+            <i class="fas fa-volume-mute"></i>
+          </button>
+          <button class="btn music" id="on" title="Music On">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <button
+            class="btn instructions"
+            data-modal="instructions"
+            title="Instructions"
+          >
+            <i class="fas fa-question "></i>
+          </button>
+          <button class="btn replay" title="Play again">
+            <i class="fas fa-redo-alt"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <canvas id="score" width="900" height="900"></canvas>
     <canvas id="game-area"> </canvas>
     <div class="brand">
       <h1>LOOUP!</h1>
       <button class="btn play">Play</button>
     </div>
 
-    <div class="modal" id="modal-one">
+    <div class="modal" id="instructions">
       <div class="modal-bg modal-exit"></div>
       <div class="modal-container">
         <h1>Game instructions</h1>
@@ -59,20 +69,57 @@
           <p>Press space bar to jump</p>
         </div>
 
-        <button class="modal-close modal-exit">X</button>
+        <button class="modal-exit"><i class="fas fa-times"></i></button>
       </div>
     </div>
 
-    <canvas id="score" width="900" height="900"></canvas>
+    <div class="modal" id="attributions">
+      <div class="modal-bg modal-exit"></div>
+      <div class="modal-container">
+        <h1>Attributions</h1>
+        <div class="game-credits">
+          <p>
+            Background music by Eric Matyas -
+            <a href="https://www.soundimage.org" target="_blank"
+              >www.soundimage.org</a
+            >
+          </p>
+          <br />
+          <p>
+            Character sprites by Bevouliin -
+            <a href="https://www.bevouliin.com" target="_blank"
+              >www.bevouliin.com/</a
+            >
+          </p>
+          <br />
+          <p>
+            Background image by Svstudioart -
+            <a href="https://www.freepik.com/svstudioart" target="_blank"
+              >www.freepik.com/svstudioart/</a
+            >
+          </p>
+          <br />
+          <p>
+            SFX by @Shades -
+            <a href="https://soundcloud.com/noshades" target="_blank"
+              >www.soundcloud.com/noshades/</a
+            >
+          </p>
+        </div>
+
+        <button class="modal-exit"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
 
     <footer>
       <a
-        class="btn linkedin"
+        class="btn"
         href="https://www.linkedin.com/in/sherab-pereira-arias-bb79b8157/"
+        target="_blank"
       >
         <i class="fab fa-linkedin-in"></i>
       </a>
-      <a class="btn github" href="https://github.com/OrigenZ">
+      <a class="btn" href="https://github.com/OrigenZ" target="_blank">
         <i class="fab fa-github"></i>
       </a>
     </footer>

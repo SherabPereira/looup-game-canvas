@@ -312,6 +312,7 @@ function startGame() {
     a.style.display = "none";
   });
 
+  toogleSoundButton();
   createPads(true);
   createPlayerSpriteAnimations();
   createPlayer();
@@ -342,15 +343,28 @@ function loadModal() {
   });
 }
 
+function toogleSoundButton() {
+  const offBtn = document.querySelector("#off");
+  const onBtn = document.querySelector("#on");
+
+  if (offBtn.style.display === "none") {
+    onBtn.style.display = "none";
+    offBtn.style.display = "block";
+  } else {
+    onBtn.style.display = "block";
+    offBtn.style.display = "none";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
   loadModal();
   document
-    .querySelector(".on")
+    .querySelector("#on")
     .addEventListener("click", () => gameTheme.play());
   document
-    .querySelector(".off")
+    .querySelector("#off")
     .addEventListener("click", () => gameTheme.pause());
 
   document.querySelector(".play").addEventListener("click", () => {
@@ -359,4 +373,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".replay").addEventListener("click", () => {
     window.location.reload();
   });
+  document.querySelector("#off").style.display = "none";
+  document
+    .querySelectorAll(".music")
+    .forEach((ele) => ele.addEventListener("click", toogleSoundButton));
 });
