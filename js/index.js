@@ -70,11 +70,19 @@ function createPads(isMultiplePads) {
   const padHeight = 50;
   const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
   const availableSpace = CANVAS_WIDTH;
+  const middleGround = CANVAS_WIDTH / 2;
+
+  let x;
+  let y;
+  let xPos;
 
   if (isMultiplePads) {
     for (let i = 0; i < numberOfPads; i++) {
-      let x = Math.ceil(Math.random() * availableSpace);
-      let y = i * (gapBetweenPads + 5);
+      xPos = Math.ceil(Math.random() * 2);
+      xPos === 1
+        ? (x = Math.random() * middleGround)
+        : (x = Math.random() * middleGround + middleGround - padWidth);
+      y = i * (gapBetweenPads + 5);
       padsArray.unshift(
         new Pad(
           padImg1,
@@ -87,8 +95,11 @@ function createPads(isMultiplePads) {
       );
     }
   } else {
-    let x = Math.ceil(Math.random() * availableSpace);
-    let y = gapBetweenPads;
+    xPos = Math.ceil(Math.random() * 2);
+    xPos === 1
+      ? (x = Math.random() * middleGround)
+      : (x = Math.random() * middleGround + middleGround - padWidth);
+    y = gapBetweenPads;
     padsArray.push(
       new Pad(padImg1, x, -y - padHeight, padWidth, padHeight, padSpeedModifier)
     );

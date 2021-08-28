@@ -1,7 +1,7 @@
 class Pad {
   constructor(image, x, y, width, height, speedModifier) {
     this.y = y;
-    this.x = Math.random() * x;
+    this.x = x;
     this.width = width;
     this.height = height;
     this.image = image;
