@@ -252,14 +252,20 @@ function createPlayerSpriteAnimations() {
 }
 
 function createEnemies() {
+  const millisToNewBee = 4800;
+  const millisToNewGhost = 12000;
+
   enemiesOneIntervalId = setInterval(() => {
-    enemiesArray.push(new Bee(beeImage, beeSpriteWidth, beeSpriteHeight));
-  }, 4800);
+    if (document.hasFocus())
+      enemiesArray.push(new Bee(beeImage, beeSpriteWidth, beeSpriteHeight));
+  }, millisToNewBee);
+
   enemiesTwoIntervalId = setInterval(() => {
-    enemiesArray.push(
-      new Ghost(ghostImage, ghostSpriteWidth, ghostSpriteHeight)
-    );
-  }, 12000);
+    if (document.hasFocus())
+      enemiesArray.push(
+        new Ghost(ghostImage, ghostSpriteWidth, ghostSpriteHeight)
+      );
+  }, millisToNewGhost);
 }
 
 function checkInPlatform(padsArray, playerObj) {
@@ -300,6 +306,7 @@ function checkPickedCoin(coinsArray, playerObj) {
 }
 
 function startGame() {
+  document.querySelector('#game-area').focus();
   document.querySelector(".brand").style.display = 0;
   document.querySelector(".brand").style.opacity = 0;
   document.querySelector(".play").style.display = "none";
