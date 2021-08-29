@@ -1,17 +1,14 @@
 class Hit {
-  constructor(x, y, size, isTriggered) {
-    this.image = new Image();
-    this.image.src =
-      "https://origenz.github.io/looup-game-canvas/resources/img/misc/pow.png";
-    this.spriteWidth = 200;
-    this.spriteHeight = 178;
+  constructor(image, sound, x, y, spriteWidth, spriteHeight, size) {
+    this.image = image;
+    this.sound = sound;
+    this.spriteWidth = spriteWidth;
+    this.spriteHeight = spriteHeight;
     this.spriteSheetLength = 5;
     this.x = x;
     this.y = y;
     this.size = size;
     this.frame = 0;
-    this.sound = new Audio();
-    this.sound.src = "https://origenz.github.io/looup-game-canvas/resources/sound/ded.wav";
     this.markedToDelete = false;
     this.isTriggered = false;
   }
@@ -34,9 +31,8 @@ class Hit {
 
   update() {
     if (this.isTriggered) {
-      if (this.frame === 0) this.sound.play();
-
       if (gameFrame % 5 === 0) {
+        if (this.frame === 0) this.sound.play();
         this.frame > 5 ? (this.markedToDelete = true) : this.frame++;
       }
     }

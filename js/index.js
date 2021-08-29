@@ -25,7 +25,8 @@ let isSpace = false;
 let enemiesOneIntervalId = null;
 let enemiesTwoIntervalId = null;
 
-//Background Layers
+/***** IMAGES *****/
+
 const backgroundLayer1 = new Image();
 backgroundLayer1.src =
   "https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/background.png";
@@ -38,39 +39,110 @@ const layersArray = [
   new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, layer1SpeedModifier),
   new Layer(backgroundLayer2, CANVAS_WIDTH, CANVAS_HEIGTH, layer2SpeedModifier),
 ];
-
-// Sound and SFX
-const gameTheme = new sound(
-  "https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.ogg"
-);
-
-// Pads
-let padsArray = [];
+//
+const playerImage = new Image();
+playerImage.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png";
+//
 const padImg1 = new Image();
 padImg1.src =
   "https://origenz.github.io/looup-game-canvas/resources/img/pads/grass_pad.png";
 
+//
+const beeImage = new Image();
+beeImage.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/sprites/bee_enemy.png";
+
+const ghostImage = new Image();
+ghostImage.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png";
+
+//
+const hitImage = new Image();
+hitImage.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/misc/pow.png";
+//
+const coinImage = new Image();
+coinImage.src =
+  "https://origenz.github.io/looup-game-canvas/resources/img/misc/bitcoin.png";
+//
+
+/****  SOUND AND SFX ****/
+
+const gameTheme = new Sound(
+  "https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.ogg",
+  0.4,
+  true
+);
+//
+const playerJumpSound = new Sound(
+  "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3",
+  1,
+  false,
+  true
+);
+//
+const hitSound = new Sound(
+  "https://origenz.github.io/looup-game-canvas/resources/sound/ded.wav",
+  1,
+  false,
+  true
+);
+//
+const coinSound = new Sound(
+  "https://origenz.github.io/looup-game-canvas/resources/sound/coin.wav",
+  1,
+  false,
+  true
+);
+
+/****  OBJECT's VARIABLES ****/
+
+// Pads
+let padsArray = [];
+const padSpriteWidth = 150;
+const padSpriteHeight = 50;
+
 //Player
-let player = null;
-const playerSpriteWidth = 165;
-const playerSpriteHeight = 164;
 const spriteAnimations = [];
 let playerAnimationStates = [];
+let player = null;
+
+const playerSpriteWidth = 165;
+const playerSpriteHeight = 164;
 
 //Enemies
 let enemiesArray = [];
 
+const beeSpriteWidth = 273;
+const beeSpriteHeight = 282;
+
+const ghostSpriteWidth = 160;
+const ghostSpriteHeight = 237.5;
+
 //Hits
-const hit = new Hit(0, 0, 65, false);
+const hitSpriteWidth = 200;
+const hitSpriteHeight = 178;
+
+const hit = new Hit(
+  hitImage,
+  hitSound,
+  0,
+  0,
+  hitSpriteWidth,
+  hitSpriteHeight,
+  65
+);
 
 //Coins
 let coinsArray = [];
 
-// Functions
+const coinSpritewidth = 291;
+const coinSpriteHeight = 278;
+
+/****** FUNCTIONS  ******/
 
 function createPads(isMultiplePads) {
-  const padWidth = 150;
-  const padHeight = 50;
   const gapBetweenPads = CANVAS_HEIGTH / numberOfPads;
   const middleGround = CANVAS_WIDTH / 2;
 
@@ -85,15 +157,15 @@ function createPads(isMultiplePads) {
     xPos = Math.ceil(Math.random() * 2);
     xPos === 1
       ? (x = Math.random() * middleGround)
-      : (x = Math.random() * middleGround + middleGround - padWidth);
+      : (x = Math.random() * middleGround + middleGround - padSpriteWidth);
     y = padNum * gapBetweenPads;
 
     const pad = new Pad(
       padImg1,
       x,
-      y - padHeight,
-      padWidth,
-      padHeight,
+      y - padSpriteHeight,
+      padSpriteWidth,
+      padSpriteHeight,
       padSpeedModifier
     );
     padsArray.unshift(pad);
@@ -105,7 +177,15 @@ function createCoin(pad) {
   const coinProbability = Math.round(Math.random() * 2 + 1);
 
   if (coinProbability === 3) {
-    const coin = new Coin(pad.x, pad.y, coinSpeedModifier);
+    const coin = new Coin(
+      coinImage,
+      coinSound,
+      pad.x,
+      pad.y,
+      coinSpeedModifier,
+      coinSpritewidth,
+      coinSpriteHeight
+    );
     const delay = Math.round(Math.random() * 3 + 1);
 
     if (delay === 2) coin.frame = 8;
@@ -119,7 +199,14 @@ function createPlayer() {
   if (padsArray.length !== 0 && padsArray !== null) {
     const x = padsArray[0].x + 45; // hardcoded
     const y = padsArray[0].y - 52; //hardcoded
-    player = new Player(x, y, playerSpriteWidth, playerSpriteHeight);
+    player = new Player(
+      playerImage,
+      playerJumpSound,
+      x,
+      y,
+      playerSpriteWidth,
+      playerSpriteHeight
+    );
   }
 }
 
@@ -166,29 +253,13 @@ function createPlayerSpriteAnimations() {
 
 function createEnemies() {
   enemiesOneIntervalId = setInterval(() => {
-    enemiesArray.push(new Bee());
+    enemiesArray.push(new Bee(beeImage, beeSpriteWidth, beeSpriteHeight));
   }, 4800);
   enemiesTwoIntervalId = setInterval(() => {
-    enemiesArray.push(new Ghost());
+    enemiesArray.push(
+      new Ghost(ghostImage, ghostSpriteWidth, ghostSpriteHeight)
+    );
   }, 12000);
-}
-
-function keyDown(event) {
-  if (event.key === " ") {
-    isSpace = true;
-  } else if (event.key === "ArrowLeft") {
-    isLeft = true;
-    player.moveLeft();
-  } else if (event.key === "ArrowRight") {
-    isRight = true;
-    player.moveRight();
-  }
-}
-
-function keyUp(event) {
-  if (event.key === " ") isSpace = false;
-  if (event.key === "ArrowLeft") isLeft = false;
-  if (event.key === "ArrowRight") isRight = false;
 }
 
 function checkInPlatform(padsArray, playerObj) {
@@ -223,9 +294,74 @@ function checkPickedCoin(coinsArray, playerObj) {
   coinsArray.forEach((coin) => {
     if (coin.isColliding(playerObj)) {
       coin.markedToDelete = true;
-      coin.sound.play();
-      score += 150;
+      score += 100;
     }
+  });
+}
+
+function startGame() {
+  document.querySelector(".brand").style.display = 0;
+  document.querySelector(".brand").style.opacity = 0;
+  document.querySelector(".play").style.display = "none";
+
+  document.querySelectorAll("footer a").forEach((a) => {
+    a.style.display = "none";
+  });
+
+  toogleSoundButton();
+  createPads(true);
+  createPlayerSpriteAnimations();
+  createPlayer();
+  createEnemies();
+  animate();
+  gameTheme.play();
+}
+
+function gameOver() {
+  clearInterval(enemiesOneIntervalId);
+  clearInterval(enemiesTwoIntervalId);
+  padsArray = [];
+  drawGameOverScreen();
+  restartGameButton();
+}
+
+function restartGameButton() {
+  document.querySelector(".replay").style.opacity = 1;
+  document.querySelector(".replay").style.backgroundColor = "white";
+}
+
+function keyDown(event) {
+  if (event.key === " ") {
+    isSpace = true;
+  } else if (event.key === "ArrowLeft") {
+    isLeft = true;
+    player.moveLeft();
+  } else if (event.key === "ArrowRight") {
+    isRight = true;
+    player.moveRight();
+  }
+}
+
+function keyUp(event) {
+  if (event.key === " ") isSpace = false;
+  if (event.key === "ArrowLeft") isLeft = false;
+  if (event.key === "ArrowRight") isRight = false;
+}
+
+function loadModals() {
+  modals.forEach((trigger) => {
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      const modal = document.getElementById(trigger.dataset.modal);
+      modal.classList.add("open");
+      const exits = modal.querySelectorAll(".modal-exit");
+      exits.forEach((exit) => {
+        exit.addEventListener("click", (event) => {
+          event.preventDefault();
+          modal.classList.remove("open");
+        });
+      });
+    });
   });
 }
 
@@ -239,12 +375,17 @@ function updateScore() {
   scoreCtx.strokeText(`Score • ${score}`, 20, 55);
 }
 
-function gameOver() {
-  clearInterval(enemiesOneIntervalId);
-  clearInterval(enemiesTwoIntervalId);
-  padsArray = [];
-  drawGameOverScreen();
-  restartGameButton();
+function toogleSoundButton() {
+  const offBtn = document.querySelector("#off");
+  const onBtn = document.querySelector("#on");
+
+  if (offBtn.style.display === "none") {
+    onBtn.style.display = "none";
+    offBtn.style.display = "block";
+  } else {
+    onBtn.style.display = "block";
+    offBtn.style.display = "none";
+  }
 }
 
 function drawGameOverScreen() {
@@ -270,30 +411,6 @@ function drawGameOverScreen() {
 
   ctx.fillText(`${score}`, CANVAS_WIDTH / 2, 600);
   ctx.strokeText(`${score}`, CANVAS_WIDTH / 2, 600);
-}
-
-function sound(src) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.preload = "auto";
-  this.sound.controls = "none";
-  this.sound.style.display = "none";
-  this.sound.loop = true;
-  this.sound.muted = true;
-  this.sound.volume = 0.4;
-  document.body.appendChild(this.sound);
-
-  this.play = function () {
-    this.sound.play();
-    this.sound.muted = false;
-  };
-  this.pause = function () {
-    this.sound.pause();
-  };
-  this.stop = function () {
-    this.sound.pause();
-    this.sound.currentTime = 0;
-  };
 }
 
 function animate() {
@@ -344,59 +461,6 @@ function animate() {
   gameFrame++;
 
   requestAnimationFrame(animate);
-}
-
-function startGame() {
-  document.querySelector(".brand").style.display = 0;
-  document.querySelector(".brand").style.opacity = 0;
-  document.querySelector(".play").style.display = "none";
-
-  document.querySelectorAll("footer a").forEach((a) => {
-    a.style.display = "none";
-  });
-
-  toogleSoundButton();
-  createPads(true);
-  createPlayerSpriteAnimations();
-  createPlayer();
-  createEnemies();
-  animate();
-  gameTheme.play();
-}
-
-function restartGameButton() {
-  document.querySelector(".replay").style.opacity = 1;
-  document.querySelector(".replay").style.backgroundColor = "white";
-}
-
-function loadModals() {
-  modals.forEach((trigger) => {
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      const modal = document.getElementById(trigger.dataset.modal);
-      modal.classList.add("open");
-      const exits = modal.querySelectorAll(".modal-exit");
-      exits.forEach((exit) => {
-        exit.addEventListener("click", (event) => {
-          event.preventDefault();
-          modal.classList.remove("open");
-        });
-      });
-    });
-  });
-}
-
-function toogleSoundButton() {
-  const offBtn = document.querySelector("#off");
-  const onBtn = document.querySelector("#on");
-
-  if (offBtn.style.display === "none") {
-    onBtn.style.display = "none";
-    offBtn.style.display = "block";
-  } else {
-    onBtn.style.display = "block";
-    offBtn.style.display = "none";
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

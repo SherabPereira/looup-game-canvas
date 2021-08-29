@@ -1,11 +1,9 @@
 class Ghost {
-  constructor() {
-    this.image = new Image();
-    this.image.src =
-      "https://origenz.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png";
+  constructor(image, spriteWidth, spriteHeight) {
+    this.image = image;
     this.speed = Math.random() * 3 + 1;
-    this.spriteWidth = 160;
-    this.spriteHeight = 237.5;
+    this.spriteWidth = spriteWidth;
+    this.spriteHeight = spriteHeight;
     this.width = this.spriteWidth / 3.5;
     this.height = this.spriteHeight / 3.5;
     this.x = Math.random() * (canvas.width - this.width);
@@ -15,6 +13,7 @@ class Ghost {
     this.frame = 0;
     this.interval = Math.floor(Math.random() * 250 + 250);
   }
+
   isColliding(obj) {
     if (
       this.x > obj.x + obj.width ||
@@ -24,9 +23,23 @@ class Ghost {
     ) {
       return false;
     }
-
     return true;
   }
+
+  draw() {
+    ctx.drawImage(
+      this.image,
+      this.frame * this.spriteWidth,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+  }
+
   update() {
     if (this.y + this.height > CANVAS_WIDTH) this.markedToDelete = true;
 
@@ -44,18 +57,5 @@ class Ghost {
     if (gameFrame % 5 === 0) {
       this.frame === 10 ? (this.frame = 0) : this.frame++;
     }
-  }
-  draw() {
-    ctx.drawImage(
-      this.image,
-      this.frame * this.spriteWidth,
-      0,
-      this.spriteWidth,
-      this.spriteHeight,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
   }
 }

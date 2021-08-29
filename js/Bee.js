@@ -1,11 +1,9 @@
 class Bee {
-  constructor() {
-    this.image = new Image();
-    this.image.src =
-      "https://origenz.github.io/looup-game-canvas/resources/img/sprites/bee_enemy.png";
+  constructor(image, spriteWidth, spriteHeight) {
+    this.image = image;
     this.speed = Math.random() * 4 + 1;
-    this.spriteWidth = 273;
-    this.spriteHeight = 282;
+    this.spriteWidth = spriteWidth;
+    this.spriteHeight = spriteHeight;
     this.width = this.spriteWidth / 5;
     this.height = this.spriteHeight / 5;
     this.x = CANVAS_WIDTH + 100;
@@ -16,6 +14,7 @@ class Bee {
     this.curve = Math.random() * 5;
     this.markedToDelete = false;
   }
+
   isColliding(obj) {
     if (
       this.x > obj.x + obj.width ||
@@ -27,14 +26,7 @@ class Bee {
     }
     return true;
   }
-  update() {
-    this.x -= this.speed;
-    this.y += this.curve * Math.sin(this.angle) + gameSpeed * 1.5;
-    this.angle += this.angleSpeed;
 
-    if (this.x + this.width < 0) this.markedToDelete = true;
-    this.frame ===  11 ? (this.frame = 0) : this.frame++;
-  }
   draw() {
     ctx.drawImage(
       this.image,
@@ -47,5 +39,14 @@ class Bee {
       this.width,
       this.height
     );
+  }
+
+  update() {
+    this.x -= this.speed;
+    this.y += this.curve * Math.sin(this.angle) + gameSpeed * 1.5;
+    this.angle += this.angleSpeed;
+
+    if (this.x + this.width < 0) this.markedToDelete = true;
+    this.frame === 11 ? (this.frame = 0) : this.frame++;
   }
 }

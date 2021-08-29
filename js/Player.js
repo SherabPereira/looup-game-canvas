@@ -1,12 +1,8 @@
 class Player {
-  constructor(x, y, spriteWidth, spriteHeight) {
+  constructor(image, sound, x, y, spriteWidth, spriteHeight) {
     this.state = "moveRight";
-    this.image = new Image();
-    this.image.src =
-      "https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png";
-    this.jumpSound = new Audio();
-    this.jumpSound.src =
-      "https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3";
+    this.image = image;
+    this.jumpSound = sound;
     this.spriteWidth = spriteWidth;
     this.spriteHeight = spriteHeight;
     this.width = this.spriteWidth / 2.78;
@@ -62,7 +58,6 @@ class Player {
 
     if (isSpace && this.vy === 0) {
       this.jumpSound.play();
-      this.jumpSound.currentTime = 0.004;
       if (this.state == "moveLeft") this.state = "jumpLeft";
       if (this.state == "moveRight") this.state = "jumpRight";
 
