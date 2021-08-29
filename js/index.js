@@ -6,14 +6,14 @@ const CANVAS_WIDTH = (canvas.width = 900);
 const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
-let numberOfPads = 11;
+let numberOfPads = 14;
 let padDeleted = false;
 let isGameover = false;
 let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
-const padSpeedModifier = 1.7;
+const padSpeedModifier = 1.5;
 const coinSpeedModifier = padSpeedModifier;
 const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
@@ -163,7 +163,7 @@ function createPads(isMultiplePads) {
     const pad = new Pad(
       padImg1,
       x,
-      y - padSpriteHeight,
+      y ,
       padSpriteWidth,
       padSpriteHeight,
       padSpeedModifier
@@ -269,9 +269,7 @@ function createEnemies() {
 }
 
 function checkInPlatform(padsArray, playerObj) {
-  for (let i = 0; i < padsArray.length; i++) {
-    const pad = padsArray[i];
-
+  for (const pad of padsArray) {
     if (
       playerObj.isColliding(pad) &&
       player.y + player.height < pad.y + (player.vy - 0.01)
@@ -306,7 +304,7 @@ function checkPickedCoin(coinsArray, playerObj) {
 }
 
 function startGame() {
-  document.querySelector('#game-area').focus();
+  document.querySelector("#game-area").focus();
   document.querySelector(".brand").style.display = 0;
   document.querySelector(".brand").style.opacity = 0;
   document.querySelector(".play").style.display = "none";
@@ -434,7 +432,6 @@ function animate() {
   checkEnemyCollisions(enemiesArray, player);
   checkInPlatform(padsArray, player);
   checkPickedCoin(coinsArray, player);
-  checkInPlatform(padsArray, player);
 
   if (padDeleted) {
     createPads(false);
@@ -471,23 +468,25 @@ function animate() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  loadModals();
+
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
-  loadModals();
-  document
-    .querySelector("#on")
-    .addEventListener("click", () => gameTheme.play());
+  document.querySelector(".play").addEventListener("click", startGame);
+  document.querySelector("#off").style.display = "none";
+
   document
     .querySelector("#off")
     .addEventListener("click", () => gameTheme.pause());
 
-  document.querySelector(".play").addEventListener("click", () => {
-    startGame();
-  });
-  document.querySelector(".replay").addEventListener("click", () => {
-    window.location.reload();
-  });
-  document.querySelector("#off").style.display = "none";
+  document
+    .querySelector("#on")
+    .addEventListener("click", () => gameTheme.play());
+
+  document
+    .querySelector(".replay")
+    .addEventListener("click", () => window.location.reload());
+
   document
     .querySelectorAll(".music")
     .forEach((ele) => ele.addEventListener("click", toogleSoundButton));
