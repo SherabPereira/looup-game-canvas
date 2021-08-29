@@ -33,7 +33,7 @@ class Bee {
     this.angle += this.angleSpeed;
 
     if (this.x + this.width < 0) this.markedToDelete = true;
-    this.frame > 11 ? (this.frame = 0) : this.frame++;
+    this.frame ===  11 ? (this.frame = 0) : this.frame++;
   }
   draw() {
     ctx.drawImage(

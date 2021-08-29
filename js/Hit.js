@@ -1,4 +1,4 @@
-class Hits {
+class Hit {
   constructor(x, y, size, isTriggered) {
     this.image = new Image();
     this.image.src =

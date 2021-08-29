@@ -7,13 +7,14 @@ const CANVAS_HEIGTH = (canvas.height = 900);
 
 let gameSpeed = 0;
 let numberOfPads = 11;
-let platformDeleted = false;
+let padDeleted = false;
 let isGameover = false;
 let score = 0;
 let upFrames = 0;
 let gameFrame = 0;
 
 const padSpeedModifier = 1.7;
+const coinSpeedModifier = padSpeedModifier;
 const layer1SpeedModifier = 0.6;
 const layer2SpeedModifier = 1;
 
@@ -60,7 +61,10 @@ let playerAnimationStates = [];
 let enemiesArray = [];
 
 //Hits
-const hit = new Hits(0, 0, 65, false);
+const hit = new Hit(0, 0, 65, false);
+
+//Coins
+let coinsArray = [];
 
 // Functions
 
@@ -82,10 +86,32 @@ function createPads(isMultiplePads) {
     xPos === 1
       ? (x = Math.random() * middleGround)
       : (x = Math.random() * middleGround + middleGround - padWidth);
-    y = padNum * (gapBetweenPads + 5);
-    padsArray.unshift(
-      new Pad(padImg1, x, y - padHeight, padWidth, padHeight, padSpeedModifier)
+    y = padNum * gapBetweenPads;
+
+    const pad = new Pad(
+      padImg1,
+      x,
+      y - padHeight,
+      padWidth,
+      padHeight,
+      padSpeedModifier
     );
+    padsArray.unshift(pad);
+    createCoin(pad);
+  }
+}
+
+function createCoin(pad) {
+  const coinProbability = Math.round(Math.random() * 2 + 1);
+
+  if (coinProbability === 3) {
+    const coin = new Coin(pad.x, pad.y, coinSpeedModifier);
+    const delay = Math.round(Math.random() * 3 + 1);
+
+    if (delay === 2) coin.frame = 8;
+    else if (delay === 3) coin.frame = 7;
+    else if (delay === 4) coin.frame = 6;
+    coinsArray.push(coin);
   }
 }
 
@@ -193,6 +219,16 @@ function checkEnemyCollisions(enemiesArray, playerObj) {
   });
 }
 
+function checkPickedCoin(coinsArray, playerObj) {
+  coinsArray.forEach((coin) => {
+    if (coin.isColliding(playerObj)) {
+      coin.markedToDelete = true;
+      coin.sound.play();
+      score += 150;
+    }
+  });
+}
+
 function updateScore() {
   scoreCtx.font = "35px Questrian";
   scoreCtx.fillStyle = "#4ea640";
@@ -273,30 +309,38 @@ function animate() {
 
   checkEnemyCollisions(enemiesArray, player);
   checkInPlatform(padsArray, player);
+  checkPickedCoin(coinsArray, player);
+  checkInPlatform(padsArray, player);
 
-  if (platformDeleted) {
+  if (padDeleted) {
     createPads(false);
-    platformDeleted = false;
+    padDeleted = false;
   }
 
-  [...layersArray, ...padsArray, ...enemiesArray, hit, player].forEach(
-    (object) => {
-      object.draw();
-      object.update();
-    }
-  );
-
-  padsArray = padsArray.filter((pad) => {
-    if (pad.markedToDelete) platformDeleted = true;
-    return !pad.markedToDelete;
+  [
+    ...layersArray,
+    ...padsArray,
+    ...enemiesArray,
+    ...coinsArray,
+    hit,
+    player,
+  ].forEach((object) => {
+    object.draw();
+    object.update();
   });
 
+  padsArray = padsArray.filter((pad) => {
+    return !pad.markedToDelete;
+  });
   enemiesArray = enemiesArray.filter((enemy) => {
     return !enemy.markedToDelete;
   });
+  coinsArray = coinsArray.filter((coin) => {
+    return !coin.markedToDelete;
+  });
 
   if (!isGameover) updateScore();
-  // _
+
   gameFrame++;
 
   requestAnimationFrame(animate);

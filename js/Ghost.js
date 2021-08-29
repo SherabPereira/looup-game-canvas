@@ -42,7 +42,7 @@ class Ghost {
     this.y -= dy / 100 - gameSpeed * 2;
 
     if (gameFrame % 5 === 0) {
-      this.frame > 9 ? (this.frame = 0) : this.frame++;
+      this.frame === 10 ? (this.frame = 0) : this.frame++;
     }
   }
   draw() {
