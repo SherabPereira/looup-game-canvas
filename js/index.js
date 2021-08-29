@@ -473,15 +473,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", keyDown);
   document.addEventListener("keyup", keyUp);
   document.querySelector(".play").addEventListener("click", startGame);
-  document.querySelector("#off").style.display = "none";
+  document.querySelector("#on").style.display = "none";
 
   document
     .querySelector("#off")
-    .addEventListener("click", () => gameTheme.pause());
+    .addEventListener("click", () => gameTheme.play());
 
   document
     .querySelector("#on")
-    .addEventListener("click", () => gameTheme.play());
+    .addEventListener("click", () => gameTheme.pause());
 
   document
     .querySelector(".replay")
