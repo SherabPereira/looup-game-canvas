@@ -268,9 +268,7 @@ function createEnemies() {
 }
 
 function checkInPlatform(padsArray, playerObj) {
-
   for (const pad of padsArray) {
-
     if (
       playerObj.isColliding(pad) &&
       playerObj.y + playerObj.height - 1 <= pad.y + playerObj.vy
@@ -442,7 +440,7 @@ function animate() {
   ;[
     ...layersArray,
     ...padsArray,
-    //...enemiesArray,
+    ...enemiesArray,
     ...coinsArray,
     hit,
     player,
