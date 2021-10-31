@@ -6,17 +6,17 @@ const CANVAS_WIDTH = (canvas.width = 900)
 const CANVAS_HEIGTH = (canvas.height = 900)
 
 let gameSpeed = 0
-let numberOfPads = 13
+let numberOfPads = 14
 let padDeleted = false
 let isGameover = false
 let score = 0
 let upFrames = 0
 let gameFrame = 0
 
-const padSpeedModifier = 1.5
+const padSpeedModifier = 1.3
 const coinSpeedModifier = padSpeedModifier
 const layer1SpeedModifier = 0.6
-const layer2SpeedModifier = 1
+const layer2SpeedModifier = 0.9
 
 let isLeft = false
 let isRight = false
@@ -271,7 +271,7 @@ function checkInPlatform(padsArray, playerObj) {
   for (const pad of padsArray) {
     if (
       playerObj.isColliding(pad) &&
-      playerObj.y + playerObj.height - 1 <= pad.y + playerObj.vy
+      playerObj.y + playerObj.height - 0.5 <= pad.y + playerObj.vy
     ) {
       gameSpeed = 0
       playerObj.stop()

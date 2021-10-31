@@ -12,7 +12,7 @@ class Player {
     this.vx = 0
     this.vy = 0
     this.gravity = 15
-    this.weight = 0.19
+    this.weight = 0.17
     this.frame = 0
     this.framePosition = 0
     this.frameX = 0
@@ -61,8 +61,9 @@ class Player {
       if (this.state == 'moveLeft') this.state = 'jumpLeft'
       if (this.state == 'moveRight') this.state = 'jumpRight'
 
-      this.vy = -7.5
+      this.vy = -6.9
     }
+
     if (!isSpace && this.vy !== 0) {
       if (this.state === 'jumpLeft' || this.state === 'moveLeft')
         this.state = 'fallLeft'
