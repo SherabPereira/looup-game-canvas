@@ -271,7 +271,7 @@ function checkInPlatform(padsArray, playerObj) {
   for (const pad of padsArray) {
     if (
       playerObj.isColliding(pad) &&
-      playerObj.y + playerObj.height - 0.5 <= pad.y + playerObj.vy
+      playerObj.y + playerObj.height - 1 <= pad.y + playerObj.vy
     ) {
       gameSpeed = 0
       playerObj.stop()
@@ -325,6 +325,8 @@ function gameOver() {
   clearInterval(enemiesOneIntervalId)
   clearInterval(enemiesTwoIntervalId)
   padsArray = []
+  coinsArray = []
+  enemiesArray = []
   drawGameOverScreen()
   restartGameButton()
 }
