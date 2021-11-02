@@ -89,6 +89,7 @@ class Player {
     ) {
       return false
     }
+
     return true
   }
 

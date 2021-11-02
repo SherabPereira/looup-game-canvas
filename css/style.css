@@ -1,231 +1,234 @@
 @font-face {
-    font-family: 'Questrian';
-    src: url('../resources/fonts/questrian/Questrian.otf');
+  font-family: 'Questrian';
+  src: url('../resources/fonts/questrian/Questrian.otf');
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
-    margin: 0;
-    background: rgb(82, 179, 218);
-    font-size: 10px;
+  height: 100vh;
+  margin: 0;
+  background: rgb(82, 179, 218);
+  font-size: 10px;
 }
 
 header {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
 }
 
-#game-area, #score {
-    position: absolute;
-    width: 900px;
-    height: 900px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#game-area,
+#score {
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .btn {
-    justify-content: center;
-    background-color: transparent;
-    border: 2px solid whitesmoke;
-    border-radius: 0.9rem;
-    color: whitesmoke;
-    cursor: pointer;
-    align-self: center;
-    font-size: 1.1rem;
-    font-weight: 400;
-    line-height: 1;
-    margin: .5rem 1.5rem;
-    padding: 1.3rem 2.6rem;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    transition: box-shadow 250ms ease-in-out, color 300ms ease-in-out;
+  justify-content: center;
+  background-color: transparent;
+  border: 2px solid whitesmoke;
+  border-radius: 0.9rem;
+  color: whitesmoke;
+  cursor: pointer;
+  align-self: center;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0.5rem 1.5rem;
+  padding: 1.3rem 2.6rem;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  transition: box-shadow 250ms ease-in-out, color 300ms ease-in-out;
 }
 
-.btn:hover, .btn:focus {
-    box-shadow: 0 0 40px 40px white inset;
-    color: #52b3da;
-    outline: 0;
+.btn:hover,
+.btn:focus {
+  box-shadow: 0 0 40px 40px white inset;
+  color: #52b3da;
+  outline: 0;
 }
 
 #on {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 #off {
-    padding: 1.25rem 2.6rem;
+  padding: 1.25rem 2.6rem;
 }
 
 .instructions {
-    font-size: 1.2rem;
-    padding: 1.1845rem 2.713rem;
+  font-size: 1.2rem;
+  padding: 1.1845rem 2.713rem;
 }
 
 .play {
-    padding: 1.5rem 5rem;
-    font-size: 2rem;
-    letter-spacing: .2rem;
-    background-color: white;
-    color: #88ddf0;
-    border-color: #88ddf0;
-    border-width: .5px;
+  padding: 1.5rem 5rem;
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+  background-color: white;
+  color: #88ddf0;
+  border-color: #88ddf0;
+  border-width: 0.5px;
 }
 
 .replay {
-    opacity: 0;
-    color: rgb(82, 179, 218);
-    padding: 1.25rem 2.612rem;
+  display: none;
+  color: rgb(82, 179, 218);
+  padding: 1.25rem 2.612rem;
 }
 
 .attributions {
-    align-self: flex-start;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    padding: 2rem;
-    cursor: pointer;
-    transition: all 0.2s ease-out;
+  align-self: flex-start;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
 }
 
 .attributions:hover {
-    font-size: 2.5rem;
-    color: #f4ca15;
-    transform: translateX(-0.25rem) translateY(-0.25rem);
+  font-size: 2.5rem;
+  color: #f4ca15;
+  transform: translateX(-0.25rem) translateY(-0.25rem);
 }
 
 a.btn {
-    display: inline-block;
-    border-radius: 5rem;
-    padding: 1rem;
-    font-size: 1.5rem;
-    margin: 1rem;
+  display: inline-block;
+  border-radius: 5rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  margin: 1rem;
 }
 
 .brand {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    transition: 1.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  transition: 1.5s ease-in-out;
 }
 
 .brand h1 {
-    font-family: 'Questrian', 'Montserrat', sans-serif;
-    font-size: 13rem;
-    color: whitesmoke;
-    -webkit-text-stroke-width: .5rem;
-    -webkit-text-stroke-color: #88ddf0;
+  font-family: 'Questrian', 'Montserrat', sans-serif;
+  font-size: 13rem;
+  color: whitesmoke;
+  -webkit-text-stroke-width: 0.5rem;
+  -webkit-text-stroke-color: #88ddf0;
 }
 
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    font-family: 'Questrian', 'Montserrat', sans-serif;
-    z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  font-family: 'Questrian', 'Montserrat', sans-serif;
+  z-index: 3;
 }
 
 .modal.open {
-    visibility: visible;
-    opacity: 1;
-    transition-delay: 0s;
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
 }
 
 .modal-bg {
-    position: absolute;
-    background: rgba(82, 179, 218, 0.829);
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  background: rgba(82, 179, 218, 0.829);
+  width: 100%;
+  height: 100%;
 }
 
 .modal-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: #fff;
-    position: relative;
-    padding: 3rem 3rem 5rem 3rem;
-    max-width: 45rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #fff;
+  position: relative;
+  padding: 3rem 3rem 5rem 3rem;
+  max-width: 45rem;
 }
 
 .modal-container h1 {
-    font-size: 3rem;
-    color: #88ddf0;
-    padding: 2rem;
+  font-size: 3rem;
+  color: #88ddf0;
+  padding: 2rem;
 }
 
 .modal-container p {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .modal-exit {
-    position: absolute;
-    right: 1.5rem;
-    top: 1.2rem;
-    outline: none;
-    appearance: none;
-    color: black;
-    background: none;
-    border: 0px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.5rem;
-    transition: .1s;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.2rem;
+  outline: none;
+  appearance: none;
+  color: black;
+  background: none;
+  border: 0px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: 0.1s;
 }
 
 .modal-exit:hover {
-    color: #88ddf0;
+  color: #88ddf0;
 }
 
-.game-controls, .game-instructions {
-    text-align: center;
-    line-height: 3rem;
+.game-controls,
+.game-instructions {
+  text-align: center;
+  line-height: 3rem;
 }
 
 .game-controls img {
-    width: 20rem;
-    height: auto
+  width: 20rem;
+  height: auto;
 }
 
 footer {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
-    padding: 1rem;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  padding: 1rem;
 }

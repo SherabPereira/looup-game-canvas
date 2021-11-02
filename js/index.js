@@ -5,27 +5,27 @@ const scoreCtx = document.querySelector('#score').getContext('2d')
 const CANVAS_WIDTH = (canvas.width = 900)
 const CANVAS_HEIGTH = (canvas.height = 900)
 
-let gameSpeed = 0
+let gameSpeed
 let numberOfPads = 14
-let padDeleted = false
-let isGameover = false
-let score = 0
-let upFrames = 0
-let gameFrame = 0
+let padDeleted
+let isGameover
+let score
+let gameFrame
 
 const padSpeedModifier = 1.3
 const coinSpeedModifier = padSpeedModifier
 const layer1SpeedModifier = 0.6
 const layer2SpeedModifier = 0.9
 
-let isLeft = false
-let isRight = false
-let isSpace = false
+let isLeft
+let isRight
+let isSpace
 
+let animationFrameId = null
 let enemiesOneIntervalId = null
 let enemiesTwoIntervalId = null
 
-/***** IMAGES *****/
+/***** IMAGES VARIABLE's *****/
 
 const backgroundLayer1 = new Image()
 backgroundLayer1.src =
@@ -67,7 +67,7 @@ coinImage.src =
   'https://origenz.github.io/looup-game-canvas/resources/img/misc/bitcoin.png'
 //
 
-/****  SOUND AND SFX ****/
+/****  SOUND AND SFX VARIABLE's ****/
 
 const gameTheme = new Sound(
   'https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.ogg',
@@ -124,15 +124,7 @@ const ghostSpriteHeight = 237.5
 const hitSpriteWidth = 200
 const hitSpriteHeight = 178
 
-const hit = new Hit(
-  hitImage,
-  hitSound,
-  0,
-  0,
-  hitSpriteWidth,
-  hitSpriteHeight,
-  65,
-)
+let hit
 
 //Coins
 let coinsArray = []
@@ -198,6 +190,7 @@ function createPlayer() {
   if (padsArray.length !== 0 && padsArray !== null) {
     const x = padsArray[0].x + playerSpriteWidth / 3.5
     const y = padsArray[0].y - playerSpriteHeight / 3
+
     player = new Player(
       playerImage,
       playerJumpSound,
@@ -271,7 +264,8 @@ function checkInPlatform(padsArray, playerObj) {
   for (const pad of padsArray) {
     if (
       playerObj.isColliding(pad) &&
-      playerObj.y + playerObj.height - 1 <= pad.y + playerObj.vy
+      playerObj.y + playerObj.height - 1 <= pad.y + playerObj.vy &&
+      !isGameover
     ) {
       gameSpeed = 0
       playerObj.stop()
@@ -303,15 +297,35 @@ function checkPickedCoin(coinsArray, playerObj) {
 }
 
 function startGame() {
-  document.querySelector('#game-area').focus()
+  document.querySelector('#game-area').focus() // FOCUS
   document.querySelector('.brand').style.display = 0
   document.querySelector('.brand').style.opacity = 0
   document.querySelector('.play').style.display = 'none'
 
   document.querySelectorAll('footer a').forEach((a) => {
-    a.style.display = 'none'
+    a.style.display = 'none' //TODO: refactor
   })
 
+  layersArray.forEach((layer) => {
+    layer.y = 0
+  })
+
+  hit = new Hit(hitImage, hitSound, 0, 0, hitSpriteWidth, hitSpriteHeight, 65)
+
+  gameSpeed = 0
+  padDeleted = false
+  isTimeout = false
+  isGameover = false
+  score = 0
+  gameFrame = 0
+  isLeft = false
+  isRight = false
+  isSpace = false
+  padsArray = []
+  coinsArray = []
+  enemiesArray = []
+
+  restartGameButton(false)
   toogleSoundButton()
   createPads(true)
   createPlayerSpriteAnimations()
@@ -322,36 +336,57 @@ function startGame() {
 }
 
 function gameOver() {
+  isGameover = true
+
+  if (layersArray[0].y <= -CANVAS_HEIGTH) {
+    setTimeout(() => {
+      cancelAnimationFrame(animationFrameId)
+    }) // What the funk? cancelAnimationFrame does not work outside a setTimeout
+
+    restartGameButton(true)
+
+    document.querySelectorAll('footer a').forEach((a) => {
+      a.style.display = 'block' // TODO: refactor
+    })
+  }
+
   clearInterval(enemiesOneIntervalId)
   clearInterval(enemiesTwoIntervalId)
-  padsArray = []
-  coinsArray = []
-  enemiesArray = []
+
   drawGameOverScreen()
-  restartGameButton()
 }
 
-function restartGameButton() {
-  document.querySelector('.replay').style.opacity = 1
-  document.querySelector('.replay').style.backgroundColor = 'white'
+function restartGameButton(inOut) {
+  const replayBtn = document.querySelector('.replay')
+
+  if (inOut) {
+    replayBtn.style.display = 'block'
+    replayBtn.style.backgroundColor = 'white'
+  } else {
+    replayBtn.style.display = 'none'
+  }
 }
 
 function keyDown(event) {
-  if (event.key === ' ') {
-    isSpace = true
-  } else if (event.key === 'ArrowLeft') {
-    isLeft = true
-    player.moveLeft()
-  } else if (event.key === 'ArrowRight') {
-    isRight = true
-    player.moveRight()
+  if (player) {
+    if (event.key === ' ') {
+      isSpace = true
+    } else if (event.key === 'ArrowLeft') {
+      isLeft = true
+      player.moveLeft()
+    } else if (event.key === 'ArrowRight') {
+      isRight = true
+      player.moveRight()
+    }
   }
 }
 
 function keyUp(event) {
-  if (event.key === ' ') isSpace = false
-  if (event.key === 'ArrowLeft') isLeft = false
-  if (event.key === 'ArrowRight') isRight = false
+  if (player) {
+    if (event.key === ' ') isSpace = false
+    if (event.key === 'ArrowLeft') isLeft = false
+    if (event.key === 'ArrowRight') isRight = false
+  }
 }
 
 function loadModals() {
@@ -379,6 +414,10 @@ function updateScore() {
 
   scoreCtx.lineWidth = 2
   scoreCtx.strokeText(`Score • ${score}`, 20, 55)
+
+  if (gameSpeed > 0.3) {
+    score += Math.ceil((gameFrame % 2) / 3)
+  }
 }
 
 function toogleSoundButton() {
@@ -424,11 +463,7 @@ function animate() {
   scoreCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGTH)
 
   if (player.y + player.height > CANVAS_HEIGTH || isGameover) gameOver()
-
-  if (gameSpeed > 0.3) {
-    upFrames++
-    score += Math.ceil((upFrames % 2) / 2)
-  }
+  else updateScore()
 
   checkEnemyCollisions(enemiesArray, player)
   checkInPlatform(padsArray, player)
@@ -461,11 +496,8 @@ function animate() {
     return !coin.markedToDelete
   })
 
-  if (!isGameover) updateScore()
-
   gameFrame++
-
-  requestAnimationFrame(animate)
+  animationFrameId = requestAnimationFrame(animate)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -484,9 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .querySelector('#on')
     .addEventListener('click', () => gameTheme.pause())
 
-  document
-    .querySelector('.replay')
-    .addEventListener('click', () => window.location.reload())
+  document.querySelector('.replay').addEventListener('click', startGame)
 
   document
     .querySelectorAll('.music')
