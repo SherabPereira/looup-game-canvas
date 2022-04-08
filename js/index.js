@@ -29,11 +29,11 @@ let enemiesTwoIntervalId = null
 
 const backgroundLayer1 = new Image()
 backgroundLayer1.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/background.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/backgrounds/background.png'
 
 const backgroundLayer2 = new Image()
 backgroundLayer2.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/backgrounds/cloud-group.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/backgrounds/cloud-group.png'
 
 const layersArray = [
   new Layer(backgroundLayer1, CANVAS_WIDTH, CANVAS_HEIGTH, layer1SpeedModifier),
@@ -42,55 +42,55 @@ const layersArray = [
 //
 const playerImage = new Image()
 playerImage.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/sprites/player.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/sprites/player.png'
 //
 const padImg1 = new Image()
 padImg1.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/pads/grass_pad.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/pads/grass_pad.png'
 
 //
 const beeImage = new Image()
 beeImage.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/sprites/bee_enemy.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/sprites/bee_enemy.png'
 
 const ghostImage = new Image()
 ghostImage.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/sprites/ghost_enemy.png'
 
 //
 const hitImage = new Image()
 hitImage.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/misc/pow.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/misc/pow.png'
 //
 const coinImage = new Image()
 coinImage.src =
-  'https://origenz.github.io/looup-game-canvas/resources/img/misc/bitcoin.png'
+  'https://sherabpereira.github.io/looup-game-canvas/resources/img/misc/bitcoin.png'
 //
 
 /****  SOUND AND SFX VARIABLE's ****/
 
 const gameTheme = new Sound(
-  'https://origenz.github.io/looup-game-canvas/resources/sound/gameMusic.ogg',
+  'https://sherabpereira.github.io/looup-game-canvas/resources/sound/gameMusic.ogg',
   0.4,
   true,
 )
 //
 const playerJumpSound = new Sound(
-  'https://origenz.github.io/looup-game-canvas/resources/sound/jump.mp3',
+  'https://sherabpereira.github.io/looup-game-canvas/resources/sound/jump.mp3',
   1,
   false,
   true,
 )
 //
 const hitSound = new Sound(
-  'https://origenz.github.io/looup-game-canvas/resources/sound/ded.wav',
+  'https://sherabpereira.github.io/looup-game-canvas/resources/sound/ded.wav',
   1,
   false,
   true,
 )
 //
 const coinSound = new Sound(
-  'https://origenz.github.io/looup-game-canvas/resources/sound/coin.wav',
+  'https://sherabpereira.github.io/looup-game-canvas/resources/sound/coin.wav',
   1,
   false,
   true,
